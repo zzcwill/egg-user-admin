@@ -27,12 +27,15 @@ module.exports = appInfo => {
     serverUrl: 'https://cnodejs.org/api/v1'
   };  
 
-
-
   // add your middleware config here
   exports.middleware = [
-    'robot'
+    'robot',
+    'gzip'
   ];
+  exports.gzip = {
+    threshold: 600, // 小于 1k 的响应体不压缩
+  };
+
   // robot's configurations
   exports.robot = {
     ua: [

@@ -1,9 +1,14 @@
-<html>
-  <head>
-    <title>Hacker News</title>
-    <link rel="stylesheet" href="/public/css/news.css" />
-  </head>
-  <body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<link rel="shortcut icon" href="/favicon.ico"/>
+		<meta name="viewport" content="width=1240,user-scalable=yes">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>news</title>
+		<link rel="stylesheet" href="/public/css/reset.css" />
+		<script src="/public/js/jquery-1.11.1.min.js"></script>
+	</head>
+	<body>
     <ul class="news-view view">
       {% for item in list %}
         <li class="item">
@@ -16,6 +21,6 @@
           </div>          
         </li>
       {% endfor %}
-    </ul>
-  </body>
+    </ul>  
+	</body>
 </html>
