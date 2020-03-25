@@ -30,18 +30,20 @@ module.exports = appInfo => {
   // add your middleware config here
   exports.middleware = [
     'robot',
-    'gzip'
+    'gzip',
+    'compress'
   ];
-  exports.gzip = {
-    threshold: 600, // 小于 1k 的响应体不压缩
-  };
-
-  // robot's configurations
   exports.robot = {
     ua: [
-      /Baiduspider/i,
+      /Baiduspider/i
     ]
-  };  
+  }; 
+  exports.gzip = {
+    threshold: 1024 // 小于 1k 的响应体不压缩
+  }; 
+  exports.compress = {
+    threshold: 100
+  }; 
 
   // add your user config here
   const userConfig = {
