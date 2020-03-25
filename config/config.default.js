@@ -23,12 +23,22 @@ module.exports = appInfo => {
   }
 
   exports.news = {
-    pageSize: 5,
-    serverUrl: 'https://hacker-news.firebaseio.com/v0'
+    pageSize: 2,
+    serverUrl: 'https://cnodejs.org/api/v1'
   };  
 
+
+
   // add your middleware config here
-  config.middleware = []; 
+  exports.middleware = [
+    'robot'
+  ];
+  // robot's configurations
+  exports.robot = {
+    ua: [
+      /Baiduspider/i,
+    ]
+  };  
 
   // add your user config here
   const userConfig = {

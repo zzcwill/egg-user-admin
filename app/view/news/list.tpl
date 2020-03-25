@@ -7,7 +7,13 @@
     <ul class="news-view view">
       {% for item in list %}
         <li class="item">
-          <a href="{{ item.url }}">{{ item.title }}</a>
+          <a>{{ item.title }}</a>
+          <div>
+            {{ item.create_at }}
+          </div>          
+          <div>
+            {{ helper.relativeTime(item.create_at) }}
+          </div>          
         </li>
       {% endfor %}
     </ul>
