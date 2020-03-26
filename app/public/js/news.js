@@ -19,7 +19,7 @@ $(function(){
 		url:"/api/news/add",
 		data:{
 			title : 'java2',
-			content: '1'
+			content: 'java2'
 		},	
 		dataType:"json",
 		success:function(res){
@@ -27,7 +27,29 @@ $(function(){
 		},
 		error:function(){
 		}
-	});		
+	});	
+	
+	//上传图片1
+  $("#upImage1").click(function () {
+    $("#upImageInput1").trigger("click");
+  });
+  $("#upImageInput1").change(function () {
+    var formData = new FormData();
+		var _this = this;
+
+    formData.append('fileImg', _this.files[0]);
+
+    $.ajax({
+        url: "/api/upload/new",
+        type:"post",
+        data:formData,
+        processData: false,
+        contentType: false, 
+        success: function (res) {
+					console.info(res)
+        }
+    });      
+  });	
 })
 
 function getCookie(cookie_name) {

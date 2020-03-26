@@ -14,6 +14,7 @@ module.exports = appInfo => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1585114634462_7124';
+  config.maxAge = 86400000;
 
   config.view = {
     defaultViewEngine: 'nunjucks',
@@ -53,6 +54,18 @@ module.exports = appInfo => {
       }
     }
   }; 
+
+  exports.multipart = {
+    mode: 'stream'
+  }; 
+  
+  exports.cluster = {
+    listen: {
+      path: '',
+      port: 7002,
+      hostname: '0.0.0.0'
+  }
+}  
 
   // add your user config here
   const userConfig = {

@@ -5,7 +5,7 @@ const Controller = require('egg').Controller;
 class HomeController extends Controller {
   async index() {
     const { ctx } = this;
-    ctx.body = '首页';
+    ctx.body = ctx.session;
   }
   async user() {
     const { ctx } = this;
@@ -17,7 +17,7 @@ class HomeController extends Controller {
     if(ctx.query.name){
       ctx.body = 'hi, ' + ctx.query.name;
     }
-  } 
+  }
 }
 
 module.exports = HomeController;

@@ -23,5 +23,16 @@
         </li>
       {% endfor %}
     </ul>  
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div>
+      <button type="button" id="upImage1">
+        <span>上传图片</span>
+      </button>
+      <input type="file" name="file1" accept="image/*" class="hide" id="upImageInput1" >
+    </div>
 	</body>
 </html>

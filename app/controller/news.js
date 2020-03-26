@@ -1,4 +1,5 @@
-const Controller = require('egg').Controller;
+// const Controller = require('egg').Controller;
+const Controller = require('../core/base_controller');
 
 class NewsController extends Controller {
   async list() {
@@ -19,7 +20,7 @@ class NewsController extends Controller {
 
     if(ctx.request.body.content === '1') {
       ctx.logger.warn('news/add请求错误');
-      ctx.body = { success: false };
+      this.fail(20000,'news/add请求参数错误')
       return;   
     }
 
@@ -29,7 +30,7 @@ class NewsController extends Controller {
     // 调用 Service 进行业务处理
     const res = await service.news.add(req);
     // 设置响应内容和响应状态码
-    ctx.body = res;
+    this.success(res)
   }  
 }
 
