@@ -30,8 +30,7 @@ module.exports = appInfo => {
   // add your middleware config here
   exports.middleware = [
     'robot',
-    'gzip',
-    'compress'
+    'gzip'
   ];
   exports.robot = {
     ua: [
@@ -40,9 +39,19 @@ module.exports = appInfo => {
   }; 
   exports.gzip = {
     threshold: 1024 // 小于 1k 的响应体不压缩
-  }; 
-  exports.compress = {
-    threshold: 100
+  };
+  
+  exports.security = {
+    csrf: {
+      // 判断是否需要 ignore 的方法，请求上下文 context 作为第一个参数
+      ignore: ctx => {
+        if (ctx.request.url.indexOf('/api')!=-1) {
+          return true;
+        }else{
+          return false;
+        }
+      }
+    }
   }; 
 
   // add your user config here

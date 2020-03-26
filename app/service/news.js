@@ -16,7 +16,13 @@ class NewsService extends Service {
       dataType: 'json'
 		});
     return newsList.data.data;
-  }
+	}
+  async add(obj) {
+
+    // use build-in http client to GET hacker-news api
+		const data = obj
+    return data;
+  }	
 }
 
 module.exports = NewsService;
