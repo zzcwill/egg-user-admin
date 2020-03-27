@@ -8,8 +8,7 @@ $(function(){
 			_csrf: getCookie("csrfToken")
 		},	
 		dataType:"json",
-		success:function(res){
-			console.log(res);				
+		success:function(res){			
 		},
 		error:function(){
 		}
@@ -22,8 +21,34 @@ $(function(){
 			content: 'java2'
 		},	
 		dataType:"json",
+		success:function(res){			
+		},
+		error:function(){
+		}
+	});	
+	$.ajax({
+		type:"get",
+		url:"/api/mysql/userlist",
+		data:{
+			page : 1,
+			pageSize: '10'
+		},	
+		dataType:"json",
+		success:function(res){	
+		},
+		error:function(){
+		}
+	});	
+	$.ajax({
+		type:"post",
+		url:"/api/mysql/userlist2",
+		data:{
+			level : 40,
+			phone: '159'
+		},	
+		dataType:"json",
 		success:function(res){
-			console.log(res);				
+			console.info(res)	
 		},
 		error:function(){
 		}
