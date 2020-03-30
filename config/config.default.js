@@ -97,15 +97,14 @@ module.exports = appInfo => {
     httpOnly: true,
     encrypt: true,
   };
-};
 
+  // add your user config here
+  const userConfig = {
+    // myAppName: 'egg',
+  };
 
-// add your user config here
-const userConfig = {
-  // myAppName: 'egg',
-};
-
-return {
-  ...config,
-  ...userConfig,
+  return {
+    ...config,
+    ...userConfig,
+  };  
 };
