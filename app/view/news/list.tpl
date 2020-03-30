@@ -7,6 +7,7 @@
 		<title>news</title>
 		<link rel="stylesheet" href="/public/css/reset.css" />
 		<script src="/public/js/jquery-1.11.1.min.js"></script>
+    <script src="/public/js/jquery.cookie.js"></script>
     <script src="/public/js/news.js"></script>
 	</head>
 	<body>
