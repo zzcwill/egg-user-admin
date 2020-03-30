@@ -85,8 +85,6 @@ module.exports = appInfo => {
     app: true,
     // 是否加载到 agent 上，默认关闭
     agent: false
-<<<<<<< HEAD
-=======
   }; 
 
   exports.logger = {
@@ -98,25 +96,7 @@ module.exports = appInfo => {
     maxAge: 24 * 3600 * 1000, // 1 天
     httpOnly: true,
     encrypt: true,
-  };  
-
-  // add your user config here
-  const userConfig = {
-    // myAppName: 'egg',
->>>>>>> test1
   };
-
-  exports.logger = {
-    outputJSON: true,
-  };
-
-  exports.session = {
-    key: 'EGG_SESS',
-    maxAge: 24 * 3600 * 1000, // 1 天
-    httpOnly: true,
-    encrypt: true,  //加密传输  
-    renew: true,
-  }
 };
 
 
