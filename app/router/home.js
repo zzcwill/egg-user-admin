@@ -5,4 +5,8 @@ module.exports = app => {
 
 	const uppercase = app.middleware.uppercase()
 	router.get('/user', uppercase,controller.home.user);
+
+	router.get('/login', controller.home.login);
+	router.post('/api/login', controller.home.apilogin);
+	router.post('/api/userinfo', controller.home.apiuserinfo);
 };
