@@ -48,7 +48,7 @@ $(function(){
 		},	
 		dataType:"json",
 		success:function(res){
-			// console.info(res)	
+			console.info(res)	
 		},
 		error:function(){
 		}
@@ -71,12 +71,10 @@ $(function(){
         processData: false,
         contentType: false, 
         success: function (res) {
-					// console.info(res)
+					console.info(res)
         }
     });      
-	});
-	
-	console.info($.cookie('csrfToken'))
+  });	
 })
 
 function getCookie(cookie_name) {

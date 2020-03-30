@@ -5,6 +5,4 @@ module.exports = app => {
   require('./router/news')(app);
   require('./router/upload')(app);
   require('./router/mysql')(app);
-
-  require('./router/socket')(app);
 };

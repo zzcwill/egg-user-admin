@@ -13,14 +13,4 @@ module.exports = app => {
 		// const used = Date.now() - ctx.starttime;
     // log total cost
   });
-
-  // 注意，只有在 egg-ready 事件拿到之后才能发送消息
-  app.messenger.once('egg-ready', () => {
-    app.messenger.sendToAgent('agent-event', { 'txt': 'app-agent' });
-    app.messenger.sendToApp('app-event', { 'txt': 'app-app' });
-  }); 
-  
-  app.messenger.on('app-event', (data) => {
-		console.info(data)
-  });  
 };
