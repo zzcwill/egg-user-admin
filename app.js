@@ -1,7 +1,7 @@
 module.exports = app => {
   app.config.coreMiddleware.unshift('report');
 
-  app.once('server', server => {
+  app.once('server', server => {    
   });
   app.on('error', (err, ctx) => {
     // report error

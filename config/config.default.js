@@ -14,7 +14,7 @@ module.exports = appInfo => {
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1585114634462_7124';
-  config.maxAge = 86400000;
+  config.maxAge = 4 * 3600 * 1000;
 
   config.view = {
     defaultViewEngine: 'nunjucks',
@@ -92,10 +92,21 @@ module.exports = appInfo => {
   };
 
   exports.session = {
-    key: 'sessionid',
-    maxAge: 24 * 3600 * 1000, // 1 天
+    key: 'token',
+    // maxAge: 24 * 3600 * 1000, // 1 天
+    maxAge: 4*3600*1000,
     httpOnly: true,
     encrypt: true,
+  };
+
+  exports.redis = {
+    client: {
+      host: '47.110.47.104',
+      port: '6379',
+      password: 'chenyan20200107',
+      db: '15',
+    },
+    agent:true
   };
 
   // add your user config here
