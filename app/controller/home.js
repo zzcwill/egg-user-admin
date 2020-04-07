@@ -26,6 +26,7 @@ class HomeController extends Controller {
   async apilogin() {
     const { ctx,app } = this;
     const { name } = ctx.request.body
+
     ctx.session.token = name;
     await app.redis.set('token', name,'EX',60*10);
     this.success(name)
