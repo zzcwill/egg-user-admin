@@ -1,22 +1,12 @@
 {
-  "env": {
-    "es6": true,
-    "node": true
-  },
-  // "extends": "eslint:recommended",
+  "extends": "eslint-config-egg",
   "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 8
+    "ecmaVersion": 8,
+    "sourceType": "script",
+    "ecmaFeatures": {
+    }
   },
   "rules": {
-    // "linebreak-style": [
-    //   "error",
-    //   "unix"
-    // ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "no-console": "off"
+    "no-unused-vars": "off"
   }
 }

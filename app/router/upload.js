@@ -1,5 +1,7 @@
-module.exports = app => {
-	const { router, controller } = app;
+'use strict';
 
-	router.post('/api/upload/new',controller.upload.new);
+module.exports = app => {
+  const { router, controller } = app;
+
+  router.post('/api/upload/new', controller.upload.new);
 };

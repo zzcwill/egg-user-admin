@@ -1,18 +1,8 @@
-/* eslint valid-jsdoc: "off" */
-
 'use strict';
 
-/**
- * @param {Egg.EggAppInfo} appInfo app info
- */
 module.exports = appInfo => {
-  /**
-   * built-in config
-   * @type {Egg.EggAppConfig}
-   **/
-  const config = exports = {};
+  const config = {};
 
-  // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1585114634462_7124';
   config.maxAge = 4 * 3600 * 1000;
 
@@ -20,54 +10,54 @@ module.exports = appInfo => {
     defaultViewEngine: 'nunjucks',
     mapping: {
       '.tpl': 'nunjucks',
-    }
-  }
+    },
+  };
 
-  exports.news = {
+  config.news = {
     pageSize: 2,
-    serverUrl: 'https://cnodejs.org/api/v1'
+    serverUrl: 'https://cnodejs.org/api/v1',
   };
 
   // add your middleware config here
-  exports.middleware = [
+  config.middleware = [
     'robot',
-    'gzip'
+    'gzip',
   ];
-  exports.robot = {
+  config.robot = {
     ua: [
-      /Baiduspider/i
-    ]
+      /Baiduspider/i,
+    ],
   };
-  exports.gzip = {
-    threshold: 1024 // 小于 1k 的响应体不压缩
+  config.gzip = {
+    threshold: 1024, // 小于 1k 的响应体不压缩
   };
 
-  exports.security = {
+  config.security = {
     csrf: {
       // 判断是否需要 ignore 的方法，请求上下文 context 作为第一个参数
       ignore: ctx => {
-        if (ctx.request.url.indexOf('/api') != -1) {
+        if (ctx.request.url.indexOf('/api') !== -1) {
           return true;
-        } else {
-          return false;
         }
-      }
-    }
+        return false;
+
+      },
+    },
   };
 
-  exports.multipart = {
-    mode: 'stream'
+  config.multipart = {
+    mode: 'stream',
   };
 
-  exports.cluster = {
+  config.cluster = {
     listen: {
       path: '',
       port: 7002,
-      hostname: '0.0.0.0'
-    }
-  }
+      hostname: '0.0.0.0',
+    },
+  };
 
-  exports.mysql = {
+  config.mysql = {
     // 单数据库信息配置
     client: {
       // host
@@ -84,38 +74,31 @@ module.exports = appInfo => {
     // 是否加载到 app 上，默认开启
     app: true,
     // 是否加载到 agent 上，默认关闭
-    agent: false
-  }; 
+    agent: false,
+  };
 
-  exports.logger = {
+  config.logger = {
     outputJSON: true,
   };
 
-  exports.session = {
+  config.session = {
     key: 'token',
     // maxAge: 24 * 3600 * 1000, // 1 天
-    maxAge: 4*3600*1000,
+    maxAge: 4 * 3600 * 1000,
     httpOnly: true,
     encrypt: true,
   };
 
-  exports.redis = {
+  config.redis = {
     client: {
       host: '47.110.47.104',
       port: '6379',
       password: 'chenyan20200107',
       db: '15',
     },
-    agent:true
+    agent: true,
   };
 
-  // add your user config here
-  const userConfig = {
-    // myAppName: 'egg',
-  };
 
-  return {
-    ...config,
-    ...userConfig,
-  };  
+  return config;
 };

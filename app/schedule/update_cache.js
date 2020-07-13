@@ -1,3 +1,5 @@
+'use strict';
+
 const Subscription = require('egg').Subscription;
 const moment = require('moment');
 
@@ -6,15 +8,15 @@ class UpdateCache extends Subscription {
   static get schedule() {
     return {
       // interval: '2s',
-			type: 'all',
-			cron: '*/2 * * * * *'
+      type: 'all',
+      cron: '*/2 * * * * *',
     };
   }
 
   // subscribe 是真正定时任务执行时被运行的函数
   async subscribe() {
-		const { ctx } = this;
-		ctx.app.cache = moment().format('LTS');
+    const { ctx } = this;
+    ctx.app.cache = moment().format('LTS');
   }
 }
 

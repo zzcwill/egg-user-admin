@@ -10,11 +10,11 @@ class HomeController extends Controller {
   async user() {
     const { ctx } = this;
 
-    if(!ctx.query.name){
-      ctx.body = '缺少参数user'
+    if (!ctx.query.name) {
+      ctx.body = '缺少参数user';
     }
 
-    if(ctx.query.name){
+    if (ctx.query.name) {
       ctx.body = 'hi, ' + ctx.query.name;
     }
   }
@@ -22,27 +22,27 @@ class HomeController extends Controller {
   async login() {
     const { ctx } = this;
     await ctx.render('login/login.html');
-  } 
+  }
   async apilogin() {
-    const { ctx,app } = this;
-    const { name } = ctx.request.body
+    const { ctx, app } = this;
+    const { name } = ctx.request.body;
 
     ctx.session.token = name;
-    await app.redis.set('token', name,'EX',60*10);
-    this.success(name)
-  } 
+    await app.redis.set('token', name, 'EX', 60 * 10);
+    this.success(name);
+  }
   async apiuserinfo() {
     const { ctx } = this;
 
-    let token = ctx.session.token;   
+    const token = ctx.session.token;
 
-    if(!token) {
+    if (!token) {
       ctx.logger.warn('api/userinfo请求错误');
-      this.fail(20000,'未登录')
-      return;        
+      this.fail(20000, '未登录');
+      return;
     }
 
-    this.success(token)
+    this.success(token);
   }
 }
 
