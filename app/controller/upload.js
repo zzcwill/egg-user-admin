@@ -10,8 +10,17 @@ class UploadController extends Controller {
 
     const stream = await ctx.getFileStream();
 
+    if(stream.fields.user === 'zzc') {
+      console.info(stream.fields)
+    }
+
     try {
       const data = await ctx.service.upload.new(stream);
+
+      if(stream.fields.user) {
+        data.user = stream.fields.user
+      }
+
       this.success(data);
     } catch (err) {
       // 必须将上传的文件流消费掉，要不然浏览器响应会卡死

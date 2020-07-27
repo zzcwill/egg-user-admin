@@ -1,58 +1,58 @@
 $(function(){
-	$.ajax({
-		type:"post",
-		url:"/news/add",
-		data:{
-			title : 'java1',
-			content: 'java1',
-			_csrf: getCookie("csrfToken")
-		},	
-		dataType:"json",
-		success:function(res){			
-		},
-		error:function(){
-		}
-	});	
-	$.ajax({
-		type:"post",
-		url:"/api/news/add",
-		data:{
-			title : 'java2',
-			content: 'java2'
-		},	
-		dataType:"json",
-		success:function(res){			
-		},
-		error:function(){
-		}
-	});	
-	$.ajax({
-		type:"get",
-		url:"/api/mysql/userlist",
-		data:{
-			page : 1,
-			pageSize: '10'
-		},	
-		dataType:"json",
-		success:function(res){	
-		},
-		error:function(){
-		}
-	});	
-	$.ajax({
-		type:"post",
-		url:"/api/mysql/userlist2",
-		data:{
-			level : 40,
-			phone: '159'
-		},	
-		dataType:"json",
-		success:function(res){
-			console.info(res)	
-		},
-		error:function(){
-		}
-	});	
+	// $.ajax({
+	// 	type:"post",
+	// 	url:"/news/add",
+	// 	data:{
+	// 		title : 'java1',
+	// 		content: 'java1',
+	// 		_csrf: getCookie("csrfToken")
+	// 	},	
+	// 	dataType:"json",
+	// 	success:function(res){			
+	// 	},
+	// 	error:function(){
+	// 	}
+	// });	
+	// $.ajax({
+	// 	type:"post",
+	// 	url:"/api/news/add",
+	// 	data:{
+	// 		title : 'java2',
+	// 		content: 'java2'
+	// 	},	
+	// 	dataType:"json",
+	// 	success:function(res){			
+	// 	},
+	// 	error:function(){
+	// 	}
+	// });	
+	// $.ajax({
+	// 	type:"get",
+	// 	url:"/api/mysql/userlist",
+	// 	data:{
+	// 		page : 1,
+	// 		pageSize: '10'
+	// 	},	
+	// 	dataType:"json",
+	// 	success:function(res){	
+	// 	},
+	// 	error:function(){
+	// 	}
+	// });	
+	// $.ajax({
+	// 	type:"post",
+	// 	url:"/api/mysql/userlist2",
+	// 	data:{
+	// 		level : 40,
+	// 		phone: '159'
+	// 	},	
+	// 	dataType:"json",
+	// 	success:function(res){
+	// 		console.info(res)	
+	// 	},
+	// 	error:function(){
+	// 	}
+	// });	
 	
 	//上传图片1
   $("#upImage1").click(function () {
@@ -62,7 +62,8 @@ $(function(){
     var formData = new FormData();
 		var _this = this;
 
-    formData.append('fileImg', _this.files[0]);
+		formData.append('fileImg', _this.files[0]);
+		formData.append('user', 'zzc');
 
     $.ajax({
         url: "/api/upload/new",

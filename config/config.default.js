@@ -51,30 +51,8 @@ module.exports = appInfo => {
 
   config.cluster = {
     listen: {
-      path: '',
       port: 7002,
-      hostname: '0.0.0.0',
     },
-  };
-
-  config.mysql = {
-    // 单数据库信息配置
-    client: {
-      // host
-      host: '47.110.42.110',
-      // 端口号
-      port: '3306',
-      // 用户名
-      user: 'root',
-      // 密码
-      password: 'root',
-      // 数据库名
-      database: 'egg_user_admin',
-    },
-    // 是否加载到 app 上，默认开启
-    app: true,
-    // 是否加载到 agent 上，默认关闭
-    agent: false,
   };
 
   config.logger = {
@@ -87,16 +65,6 @@ module.exports = appInfo => {
     maxAge: 4 * 3600 * 1000,
     httpOnly: true,
     encrypt: true,
-  };
-
-  config.redis = {
-    client: {
-      host: '47.110.47.104',
-      port: '6379',
-      password: 'chenyan20200107',
-      db: '15',
-    },
-    agent: true,
   };
 
 

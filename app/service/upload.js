@@ -11,27 +11,13 @@ class UploadService extends Service {
 
     const filename = (new Date()).getTime() + path.basename(stream.filename);
     const target = path.join(this.config.baseDir, `app/public/upload_img/${filename}`);
-    const result = await new Promise((resolve, reject) => {
-      const remoteFileStream = fs.createWriteStream(target);
-      stream.pipe(remoteFileStream);
+    const readFileStream = fs.createWriteStream(target);
+    stream.pipe(readFileStream);
 
-      let errFlag;
-      remoteFileStream.on('error', err => {
-        errFlag = true;
-        sendToWormhole(stream);
-        remoteFileStream.destroy();
-        reject(err);
-      });
-
-      remoteFileStream.on('finish', async () => {
-        if (errFlag) return;
-        resolve({
-          name: filename,
-          url: `${ctx.request.header.origin}/public/upload_img/${filename}`,
-        });
-      });
-    });
-    return result;
+    return {
+      name: filename,
+      url: `${ctx.request.header.origin}/public/upload_img/${filename}`,      
+    }
   }
 }
 

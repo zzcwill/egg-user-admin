@@ -7,15 +7,8 @@ class NewsController extends Controller {
   async list() {
     const ctx = this.ctx;
     const page = ctx.query.page || 1;
-    const data = await ctx.service.news.list(page);
-    const newsList = {
-      // list: [
-      //   { id: 1, title: 'this is news 1'},
-      //   { id: 2, title: 'this is news 2'}
-      // ]
-      list: data,
-    };
-    await this.ctx.render('news/list.tpl', newsList);
+    // const data = await ctx.service.news.list(page);
+    await this.ctx.render('news/list.tpl');
   }
   async add() {
     const { ctx, service } = this;

@@ -10,29 +10,11 @@
     <script src="/public/js/news.js"></script>
 	</head>
 	<body>
-    <ul class="news-view view">
-      {% for item in list %}
-        <li class="item">
-          <a>{{ item.title }}</a>
-          <div>
-            {{ item.create_at }}
-          </div>          
-          <div>
-            {{ helper.relativeTime(item.create_at) }}
-          </div>          
-        </li>
-      {% endfor %}
-    </ul>  
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
     <div>
       <button type="button" id="upImage1">
         <span>上传图片</span>
       </button>
-      <input type="file" name="file1" accept="image/*" class="hide" id="upImageInput1" >
+      <input type="file" name="fileImg" accept="image/*" class="hide" id="upImageInput1" >
     </div>
 	</body>
 </html>
