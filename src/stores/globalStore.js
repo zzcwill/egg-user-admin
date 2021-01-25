@@ -8,7 +8,7 @@ export default class GlobalStore {
 
   @observable userInfo = {
     // 当前用户信息
-    loginName: 'nowThen',
+    loginName: 'zzc',
   };
 
   @action.bound toggleCollapsed() {
