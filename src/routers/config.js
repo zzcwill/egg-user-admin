@@ -30,12 +30,6 @@ const config = [
         component: BasicLayout, // 基本布局
         childRoutes: [
           {
-            path: '/welcome',
-            name: '欢迎页',
-            icon: <SmileOutlined />,
-            component: lazy(() => import('@/pages/Welcome')),
-          },
-          {
             path: '/home',
             name: 'home主页',
             icon: <HomeOutlined />,

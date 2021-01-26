@@ -11,6 +11,10 @@ const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const srcDir = path.join(__dirname, '../src');
 const devMode = process.env.NODE_ENV !== 'production';
 
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+
 module.exports = {
   entry: {
     main: path.join(__dirname, '../src/main.js'),
@@ -82,16 +86,17 @@ module.exports = {
       verbose: true,
     }),
     new HtmlWebpackPlugin({
-      template: `${srcDir}/index.html`,
+      template: resolve('../public/index.html'),
+      favicon: resolve('../public/favicon.ico')
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: `${srcDir}/assets/images/nowthen.jpg`,
-          to: 'nowthen.jpg',
-        },
-      ],
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: `${srcDir}/assets/images/favicon.ico`,
+    //       to: 'favicon.ico',
+    //     },
+    //   ],
+    // }),
     new AntdDayjsWebpackPlugin()
   ],
   resolve: {

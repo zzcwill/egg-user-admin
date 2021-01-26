@@ -1,14 +1,6 @@
-/*
- * @Description:
- * @Author: nowthen
- * @Date: 2020-12-09 18:36:39
- * @LastEditors: nowthen
- * @LastEditTime: 2020-12-10 17:34:53
- * @FilePath: /react-web-pro/src/pages/Home/store.js
- */
 import { createContext } from 'react';
 import { observable, action } from 'mobx';
-import request from '@/services/newRequest';
+import request from '@/services/request';
 
 class HomeStore {
   @observable tableData = [];

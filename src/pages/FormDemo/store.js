@@ -3,7 +3,7 @@ import { message } from 'antd';
 import { createContext } from 'react';
 import dayjs from 'dayjs';
 
-import request from '@/services/newRequest';
+import request from '@/services/request';
 
 class CompanySetStore {
   @observable tableData = [
