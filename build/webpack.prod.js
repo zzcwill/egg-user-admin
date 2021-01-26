@@ -52,12 +52,6 @@ let config = merge(commonConfig, {
           priority: 2,
           name: 'dll',
         },
-        codeMirror: {
-          test: /[\\/]node_modules[\\/](react-codemirror|codemirror)/,
-          minChunks: 1,
-          priority: 2,
-          name: 'codemirror',
-        },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           minChunks: 1,

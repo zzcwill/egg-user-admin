@@ -1,21 +1,7 @@
 {
-  "name": "react-web-pro",
+  "name": "huanglong-admin",
   "version": "1.0.0",
   "private": true,
-  "author": {
-    "name": "nowthen",
-    "email": "rnlvwyx@gmail.com"
-  },
-  "description": "🌈 🚀基于webpack4.0 从零搭建的React中后台项目框架模板。🚀",
-  "keywords": [
-    "react-web-pro",
-    "react",
-    "mobx",
-    "webpack4",
-    "react-template",
-    "nowthen"
-  ],
-  "license": "MIT",
   "scripts": {
     "start": "webpack serve  --color --progress --config build/webpack.dev.js",
     "build": "NODE_ENV=production webpack --progress --config ./build/webpack.prod.js",
@@ -51,7 +37,6 @@
     "mobx-react": "^6.1.4",
     "mobx-react-router": "^4.1.0",
     "react": "^17.0.1",
-    "react-codemirror": "^1.0.0",
     "react-dom": "^17.0.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"
