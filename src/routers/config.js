@@ -2,7 +2,6 @@ import React, { lazy } from 'react';
 import {
   HomeOutlined,
   SettingFilled,
-  SmileOutlined,
   FormOutlined,
   UserOutlined,
   StarOutlined,
@@ -87,7 +86,7 @@ const config = [
               },
             ],
           },
-          { path: '/', exact: true, redirect: '/welcome' },
+          { path: '/', exact: true, redirect: '/home' },
           { path: '*', exact: true, redirect: '/exception/404' },
         ],
       },
