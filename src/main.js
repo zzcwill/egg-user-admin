@@ -14,6 +14,7 @@ import AppRouter from './routers/AppRouter';
 
 // 更改.env.development的REACT_APP_BASE_API为 mock即可mock数据
 import { mockXHR } from './mock'
+console.info(process)
 if (process.env.REACT_APP_BASE_API === '/mock') {
   mockXHR()
 }

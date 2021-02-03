@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 // import request from '@/services/request';
 
 export default class GlobalStore {
-  @observable appTitle = 'huanglong';
+  @observable appTitle = 'zzc-admin';
 
   @observable collapsed = false; // 菜单收起展开
 

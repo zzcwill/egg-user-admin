@@ -7,7 +7,6 @@
 ### 技术栈
 
 涉及的技术栈均采用当前最新的版本和语法：
-
 - 使用 Webpack5.0 构建项目（不使用 create-react-app、umi 等脚手架）；
 - 使用 Babel7 配置转换 ES6、React、Mobx 等语法；
 - React 版本 V17.0.1，全部采用函数化 Hooks 特性开发项目组件；
@@ -15,6 +14,9 @@
 - 采用 Mobx5 + Hooks 实现项目数据状态管理；
 - 封装 Axios 库实现与后台 http 请求交互；
 - UI 库采用流行的 Ant-design4.0 组件库；
+- commitlint 规范git提交;
+- husky + lint-staged + Prettier 规范代码提交校验
+- eslint + prettier 规范项目代码风格
 - 完整项目实现及模块结构拆分；
 
 ### 目录结构
