@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "webpack serve  NODE_ENV=development --color --progress --config build/webpack.dev.js",
-    "build": "NODE_ENV=production webpack --progress --config ./build/webpack.prod.js",
-    "build:watch": "NODE_ENV=production webpack --progress --config ./build/webpack.prod.js",
+    "start": "cross-env NODE_ENV=development webpack serve --color --progress --config build/webpack.dev.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --config ./build/webpack.prod.js",
+    "build:watch": "cross-env NODE_ENV=production webpack --progress --config ./build/webpack.prod.js",
     "build:report": "yarn build:watch",
     "prettier": "prettier --write 'src/**/*.{js,jsx,tsx,ts,less,md,json}'",
     "lint:style": "stylelint \"src/**/*.less\" --syntax less",

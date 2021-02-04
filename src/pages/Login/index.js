@@ -1,9 +1,3 @@
-// import React from 'react';
-// import { useHistory } from 'react-router-dom';
-// import { Form, Input, Checkbox, Button, message } from 'antd';
-// import { UserOutlined, LockOutlined } from '@ant-design/icons';
-// import { observer } from 'mobx-react';
-
 import React from "react";
 import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
@@ -19,26 +13,10 @@ const LoginPage = () => {
   const history = useHistory();
   const { globalStore } = appStores();
 
-  // const handleSubmit = (values) => {
-  //   console.log('登录信息 ', values);
-  //   message.success('登录成功，即将跳转...', 2);
-  //   setTimeout(() => {
-  //     history.push('/');
-  //   }, 2000);
-  // };
-
-  const handleLogin = (loginData) => {
-    // 登录完成后 发送请求 调用接口获取用户信息
-    login(loginData)
-      .then(() => {
-        history.push('/home');
-      })
-  };
-
   const autoJump = () => {
     let token = getToken();
     if (token) {
-      history.push('/dashboard');
+      history.push('/home');
     }
   }
   autoJump()
@@ -50,53 +28,16 @@ const LoginPage = () => {
       password
     }
     // 登录完成后 发送请求 调用接口获取用户信息
-    let logindata = await login(loginData)
+    let apiData = await login(loginData)
 
-    if(loginData.code === 10000) {
-      history.push('/home');
+    if(!apiData.data.token) {
+      apiData.data.token = 'token'
     }
-
-    // 对所有表单字段进行检验
-    // form.validateFields((err, values) => {
-    //   // 检验成功
-    //   if (!err) {
-    //     const { userName, password } = values;
-    //     let loginData = {
-    //       userName,
-    //       password
-    //     }
-    //     handleLogin(loginData);
-    //   } else {
-    //     console.log("检验失败!");
-    //   }
-    // });
+    setToken(apiData.token)
+    history.push('/home');
   };  
 
   return (  
-    // <div className="page-login">
-    //   <Form onFinish={handleSubmit} className="login-form">
-    //     <div className="login-title">欢迎登录 {globalStore.appTitle}</div>
-        // <Form.Item name="username" rules={[{ required: true, message: '请输入用户名！' }]}>
-        //   <Input prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
-        // </Form.Item>
-        // <Form.Item name="password" rules={[{ required: true, message: '请输入密码！' }]}>
-        //   <Input
-        //     prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-        //     type="password"
-        //     placeholder="密码"
-        //   />
-        // </Form.Item>
-    //     <Form.Item name="remember" valuePropName="checked" initialValue>
-    //       <Checkbox>记住我</Checkbox>
-    //       <a className="login-form-forgot" href="">
-    //         忘记密码
-    //       </a>
-    //       <Button type="primary" htmlType="submit" className="login-form-button">
-    //         登录
-    //       </Button>
-    //     </Form.Item>
-    //   </Form>
-    // </div>
     <div className="login-container">
       <Form onFinish={handleSubmit} className="content">
         <div className="title">

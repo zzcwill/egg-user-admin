@@ -3,22 +3,23 @@ import Qs from 'qs'
 // import store from "@/store";
 import { message } from "antd";
 import { getToken } from "@/services/config";
+import { useHistory } from 'react-router-dom';
 
 const http = Axios.create({
 	// api的base_url
-	baseURL: process.env.REACT_APP_BASE_API,
+	baseURL: '/api',
   timeout: 5000,
   headers: {
     //后端json
-     'Content-Type': 'application/json;charset=UTF-8'
+    //  'Content-Type': 'application/json;charset=UTF-8'
     //后端表单
-    // 'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/x-www-form-urlencoded'
   },
   //后端表单application/x-www-form-urlencoded的参数转对象
-  // transformRequest: [function(data) {
-  //   data = Qs.stringify(data)
-  //   return data
-  // }]  
+  transformRequest: [function(data) {
+    data = Qs.stringify(data)
+    return data
+  }]  
 })
 
 // 设置请求头
@@ -35,6 +36,8 @@ http.interceptors.response.use((response) => {
   const res = response.data
 
   if (res.code === 30000) {
+    // const history = useHistory();
+    // history.push('/login');
     return
   } 
   
