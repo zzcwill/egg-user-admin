@@ -12,7 +12,7 @@ const HomePage = () => {
   const [num, setNum] = useState(0);
   // useEffect副作用
   useEffect(() => {
-    pageStore.qryTableDate();
+    // pageStore.qryTableDate();
   }, []);
 
   return (

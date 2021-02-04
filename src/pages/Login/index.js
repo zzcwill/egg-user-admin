@@ -5,7 +5,7 @@ import { Form, Input, Button, Spin } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { getToken, setToken } from "@/services/config";
 
-import { login, getInfo } from "@/api/common";
+import { login } from "@/api/common";
 import { appStores } from '@/stores';
 import './style.less';
 

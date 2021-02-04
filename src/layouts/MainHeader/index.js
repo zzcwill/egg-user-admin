@@ -27,13 +27,20 @@ const MainHeader = () => {
         history.push('/login');
       },
     });
-  };  
+  }; 
+  
+  const handleHome = () => {
+    history.push('/home');
+  };   
   
   const onClick = ({ key }) => {
     switch (key) {
       case "logout":
         handleLogout();
-        break;       
+        break; 
+      case "home":
+        handleHome();
+        break;               
       default:
         break;
     }
@@ -41,22 +48,14 @@ const MainHeader = () => {
   
   const menu = (
       <Menu onClick={onClick}>
-        <Menu.Item key="dashboard">
-          <Link to="/dashboard">首页</Link>
-        </Menu.Item>
-        <Menu.Item key="project">
-          <a
-            target="_blank"
-            href="https://www.baidu.com/"
-            rel="noopener noreferrer"
-          >
-            百度
-          </a>
+        <Menu.Item key="home">
+          <SmileOutlined />
+          首页
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout">
           <LogoutOutlined />
-          &nbsp; 退出      
+          退出      
         </Menu.Item>
       </Menu>
   );  
@@ -73,7 +72,7 @@ const MainHeader = () => {
           <Dropdown overlay={menu} trigger={['click', 'hover']} placement="bottomCenter">
             <div className="user-info">
               <span className="user-img" />
-              <span className="user-name">{globalStore.userInfo.loginName}</span>
+              <span className="user-name">{globalStore.userInfo.realname}</span>
             </div>
           </Dropdown>
         </Col>

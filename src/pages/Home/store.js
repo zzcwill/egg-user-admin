@@ -5,7 +5,7 @@ import request from '@/services/request';
 class HomeStore {
   @observable tableData = [];
 
-  @observable pageTitle = 'Home主页';
+  @observable pageTitle = 'Home';
 
   @observable loading = false;
 
