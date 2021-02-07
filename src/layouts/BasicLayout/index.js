@@ -18,7 +18,6 @@ const BasicLayout = ({ route, children }) => {
     globalStore.setData({
       userInfo: toData.data
     });
-    console.info(globalStore.userInfo.realname)
   });  
 
   return (

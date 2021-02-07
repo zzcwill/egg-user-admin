@@ -1,9 +1,7 @@
 import Axios from 'axios'
 import Qs from 'qs'
-// import store from "@/store";
 import { message } from "antd";
-import { getToken } from "@/services/config";
-import { useHistory } from 'react-router-dom';
+import { getToken, removeToken } from "@/services/config";
 
 const http = Axios.create({
 	// api的base_url
@@ -36,8 +34,8 @@ http.interceptors.response.use((response) => {
   const res = response.data
 
   if (res.code === 30000) {
-    // const history = useHistory();
-    // history.push('/login');
+    removeToken()
+    window.location.href = '/login'
     return
   } 
   

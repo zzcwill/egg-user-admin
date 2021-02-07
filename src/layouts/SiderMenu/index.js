@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Author: nowthen
- * @Date: 2020-12-09 18:36:39
- * @LastEditors: nowthen
- * @LastEditTime: 2020-12-10 17:33:37
- * @FilePath: /react-web-pro/src/layouts/SiderMenu/index.js
- */
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react';

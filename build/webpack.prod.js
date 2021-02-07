@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Author: nowthen
- * @Date: 2020-12-09 18:36:39
- * @LastEditors: nowthen
- * @LastEditTime: 2020-12-10 09:56:20
- * @FilePath: /react-web-pro/build/webpack.prod.js
- */
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
