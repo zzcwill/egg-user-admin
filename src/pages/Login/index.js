@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Form, Input, Button, Spin } from "antd";
@@ -13,13 +13,12 @@ const LoginPage = () => {
   const history = useHistory();
   const { globalStore } = appStores();
 
-  const autoJump = () => {
+  useEffect(() => {
     let token = getToken();
     if (token) {
       history.push('/home');
     }
-  }
-  autoJump()
+  });
 
   const handleSubmit = async (values) => {
     const { userName, password } = values;

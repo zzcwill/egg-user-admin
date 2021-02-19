@@ -8,12 +8,9 @@ import './style.less';
 const HomePage = () => {
   // useContext 订阅mobx数据
   const pageStore = useContext(Store);
+
   // useState state状态
   const [num, setNum] = useState(0);
-  // useEffect副作用
-  useEffect(() => {
-    // pageStore.qryTableDate();
-  }, []);
 
   return (
     <div className="page-home page-content">

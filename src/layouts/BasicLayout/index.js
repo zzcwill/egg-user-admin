@@ -12,17 +12,17 @@ import './style.less';
 const BasicLayout = ({ route, children }) => {
   const { globalStore } = appStores();
 
-  useEffect(async () => {
+  const getUserInfo = async () => {
     let toData = await getInfo()
 
     globalStore.setData({
       userInfo: toData.data
     });
-  });  
+  };
+  getUserInfo()
 
   return (
 
-    // pageStore.setData({ newModalVisible: false })}
     <Layout className="main-layout">
       <SiderMenu routes={route.childRoutes} />
       {/* 左侧菜单导航 */}
