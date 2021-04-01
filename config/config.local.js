@@ -21,7 +21,7 @@ module.exports = appInfo => {
       // 密码
       password: 'root',
       // 数据库名
-      database: 'yf_shop',
+      database: 'shop',
     },
     // 是否加载到 app 上，默认开启
     app: true,
@@ -34,7 +34,7 @@ module.exports = appInfo => {
     client: {
       host: '127.0.0.1',
       port: '6379',
-      password: '',
+      password: 'root',
       db: '1',
     },
     agent: true,
