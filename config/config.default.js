@@ -37,7 +37,7 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [
-    'robot',
+    'notfoundHandler',
   ];
   config.robot = {
     ua: [

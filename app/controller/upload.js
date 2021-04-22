@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('../core/base_controller');
+const Controller = require('egg').Controller;
 const path = require('path');
 const sendToWormhole = require('stream-wormhole');
 

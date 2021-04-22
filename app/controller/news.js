@@ -1,7 +1,6 @@
 'use strict';
 
-// const Controller = require('egg').Controller;
-const Controller = require('../core/base_controller');
+const Controller = require('egg').Controller;
 
 class NewsController extends Controller {
   async list() {
