@@ -1,6 +1,7 @@
 'use strict';
 
-const moment = require('moment');
+const help = require('./help');
 
-moment.locale('zh-CN');
-exports.relativeTime = time => moment(time).fromNow();
+module.exports = {
+	...help
+}
