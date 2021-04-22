@@ -1,9 +1,26 @@
 'use strict';
 
+const path = require('path');
+
 module.exports = appInfo => {
   const config = {};
 
-  config.keys = appInfo.name + '_1585114634462_7124';
+  config.config = 'http://127.0.0.1';
+  config.log_dir = path.resolve(__dirname, '../logs');
+	config.uploadOption= {
+		//上传路径-'/imgData/uploads/'
+		uploadsUrl: '/uploads/',
+		maxSize: 1024 * 1024 * 10	
+	},
+  config.tokenSecurity = {
+    secretKey: "zzc",
+    // 过期时间 3小时
+    expiresIn: 60 * 60 * 24
+  };
+
+  config.noauthArr = ['/api/login', '/api/createUser', '/api/upload', '/api/wechat/jscode2session', '/api/wechat/getUserInfo'];
+
+  config.keys = appInfo.name + '_zzc';
   config.maxAge = 4 * 3600 * 1000;
 
   config.view = {
@@ -21,7 +38,6 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [
     'robot',
-    'gzip',
   ];
   config.robot = {
     ua: [
@@ -51,7 +67,7 @@ module.exports = appInfo => {
 
   config.cluster = {
     listen: {
-      port: 7002,
+      port: 3000,
     },
   };
 
@@ -60,7 +76,7 @@ module.exports = appInfo => {
   };
 
   config.session = {
-    key: 'token',
+    key: 'session',
     // maxAge: 24 * 3600 * 1000, // 1 天
     maxAge: 4 * 3600 * 1000,
     httpOnly: true,

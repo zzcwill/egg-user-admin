@@ -5,7 +5,7 @@ module.exports = appInfo => {
 
   config.cluster = {
     listen: {
-      port: 7002,
+      port: 3000,
     },
   };
 
@@ -38,7 +38,30 @@ module.exports = appInfo => {
       db: '1',
     },
     agent: true,
-  };  
+  }; 
+  
+  config.eamil = {
+		service:'qq',
+		auth: {
+			user: '841811316@qq.com',
+			pass: 'htunwtlqzxzdbccj'
+		}	
+	}
+	config.mq = {
+		port: 3300,
+		rabbitMqOption: {
+			protocol: 'amqp',
+			hostname: '127.0.0.1',
+			port:'5672',
+			username:'root',
+			password:'root',
+			authMechanism: 'AMQPLAIN' ,
+			pathname:'/',
+			ssl: { 
+					enabled : false  
+			}  
+		}		
+	}
 
   return config;
 };
