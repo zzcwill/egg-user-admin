@@ -7,9 +7,9 @@ module.exports = appInfo => {
   config.maxAge = 4 * 3600 * 1000;
 
   config.view = {
-    defaultViewEngine: 'nunjucks',
+    defaultViewEngine: 'ejs',
     mapping: {
-      '.tpl': 'nunjucks',
+      '.ejs': 'ejs',
     },
   };
 
