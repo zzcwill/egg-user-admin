@@ -1,0 +1,77 @@
+'use strict';
+
+const path = require('path');
+const fs = require('fs');
+
+// 删除文件
+let fsUnlik = async(path) => {
+	return new Promise((resolve, reject) => {
+		fs.unlink(path, (err) => {
+				if (err) {
+					reject(err);
+				}
+				resolve()
+		});
+
+	})
+}
+
+
+const { Controller } = require('egg');
+
+class ImgController extends Controller {
+	async upload() {	
+		const { ctx, service, config } = this;
+		const { resOk } = ctx.helper.resData;
+		const { cache, imgService } = service;
+		const { checkParam, lodash } = ctx.helper;
+		const { Forbidden, ParameterException } = ctx.helper.httpCode;
+		
+		// token校验
+		let token = '';
+		if(ctx.request.body.token) {
+			token = ctx.request.body.token;
+		}
+		// 无带token
+		if (!token) {
+			throw new Forbidden('需要传token');
+			await next();
+			return
+		}
+		let tokenCache = await cache.get(token);
+		if(!tokenCache) {
+			throw new Forbidden('无效的token');
+			await next();
+			return
+		}
+		ctx.request.user = tokenCache;
+
+		let { mimetype, size, filename, path } = ctx.request.file;
+
+		if( size > config.uploadOption.maxSize) {
+			await fsUnlik(path);
+			throw new ParameterException('上传图片太大');
+			await next();
+			return
+		}
+
+		let newImg = {
+			file_type: mimetype,
+			file_size: size,
+			file_path: `${config.hostname}:${config.port}${config.uploadOption.uploadsUrl}${ctx.request.file.filename}`,
+			file_name: filename
+		};
+
+		let imgData = await imgService.add(newImg)
+
+		if(ctx.request.file !== undefined) {
+			ctx.body = resOk(
+				imgData,
+				10000,
+				'图片上传成功'
+			)
+		}
+	}
+}
+
+module.exports = ImgController;

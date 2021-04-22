@@ -18,8 +18,6 @@ module.exports = appInfo => {
     expiresIn: 60 * 60 * 24
   };
 
-  config.noauthArr = ['/api/login', '/api/createUser', '/api/upload', '/api/wechat/jscode2session', '/api/wechat/getUserInfo'];
-
   config.keys = appInfo.name + '_zzc';
   config.maxAge = 4 * 3600 * 1000;
 
@@ -37,15 +35,18 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [
+    'catchError',
+    'auth',
     'notfoundHandler',
   ];
-  config.robot = {
-    ua: [
-      /Baiduspider/i,
-    ],
-  };
-  config.gzip = {
-    threshold: 1024, // 小于 1k 的响应体不压缩
+  config.auth = {
+    noauthArr: ['/api/login', '/api/createUser', '/api/upload', '/api/wechat/jscode2session', '/api/wechat/getUserInfo'],
+    ignore: ctx => {
+      if (ctx.request.url.indexOf('/api') === -1) {
+        return true;
+      }
+      return false;
+    }
   };
 
   config.security = {

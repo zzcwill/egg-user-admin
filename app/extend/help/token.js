@@ -1,6 +1,12 @@
 const jwt = require('jsonwebtoken');
-const config = global.config;
 
+let config = {}
+
+config.security = {
+  secretKey: "zzc",
+  // 过期时间 3小时
+  expiresIn: 60 * 60 * 24
+};
 
 // 颁布令牌
 const setToken = (user) => {

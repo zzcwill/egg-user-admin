@@ -4,38 +4,52 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
-//   const apiV1Router = app.router.namespace('/api');
-//   const { controller, middleware } = app;
+	const apiRouter = app.router.namespace('/api');
+	const { router, controller, config, middleware } = app;
 
-//   const { user, message, topic, reply, collect } = controller.api;
+	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController } = controller.api;
 
-//   const tokenRequired = middleware.tokenRequired();
-//   const pagination = middleware.pagination();
-//   // const createTopicLimit = middleware.createTopicLimit(config.topic);
-//   // const createUserLimit = middleware.createUserLimit(config.create_user_per_ip);
+	const { auth, page } = middleware;
 
-//   // 用户
-//   apiV1Router.get('/user/:loginname', user.show);
-//   apiV1Router.post('/accesstoken', tokenRequired, user.verify);
+	// user-about
+	apiRouter.post('/login', userController.login);
+	apiRouter.post('/logout', userController.logout);
+	apiRouter.post('/userInfo', userController.userInfo);
+	apiRouter.post('/createUser', userController.createUser);
+	apiRouter.post('/changePassword', userController.changePassword);
 
-//   // 消息通知
-//   apiV1Router.get('/message/count', tokenRequired, message.count);
-//   apiV1Router.get('/messages', tokenRequired, message.list);
-//   apiV1Router.post('/message/mark_all', tokenRequired, message.markAll);
-//   apiV1Router.post('/message/mark_one/:msg_id', tokenRequired, message.markOne);
 
-//   // 主题
-//   apiV1Router.get('/topics', pagination, topic.index);
-//   apiV1Router.get('/topic/:id', topic.show);
-//   apiV1Router.post('/topics', tokenRequired, topic.create);
-//   apiV1Router.post('/topics/update', tokenRequired, topic.update);
+	//文件上传
+	apiRouter.post('/upload', auth, imgController.upload);
 
-//   // 主题收藏
-//   apiV1Router.post('/topic_collect/collect', tokenRequired, collect.collect);
-//   apiV1Router.post('/topic_collect/de_collect', tokenRequired, collect.de_collect);
-//   apiV1Router.get('/topic_collect/:name', collect.index);
 
-//   // 评论
-//   apiV1Router.post('/topic/:topic_id/replies', tokenRequired, reply.create);
-//   apiV1Router.post('/reply/:reply_id/ups', tokenRequired, reply.updateUps);
+	//excel导出
+	apiRouter.get('/excel', excelController.get);
+	apiRouter.get('/excel2', excelController.get2);
+
+	//发送邮件
+	apiRouter.post('/email', emailController.send);
+	apiRouter.post('/emailMq', emailController.sendMq);
+
+	//菜单
+	apiRouter.post('/menu', page, menuController.menu);
+	apiRouter.post('/userMenu', page, menuController.userMenu);
+
+	//角色
+	apiRouter.post('/role', roleController.role);
+	apiRouter.post('/userRole', roleController.userRole);
+
+	//订单
+	apiRouter.post('/order/list', orderController.list);
+	apiRouter.post('/order/add', orderController.add);
+	apiRouter.post('/order/update', orderController.update);
+	apiRouter.post('/order/delete', orderController.delete);
+
+	//客户
+	apiRouter.post('/customer/list', customerController.list);
+	apiRouter.post('/customer/add', customerController.add);
+	apiRouter.post('/customer/update', customerController.update);
+	apiRouter.post('/customer/delete', customerController.delete);
+
 };
+
