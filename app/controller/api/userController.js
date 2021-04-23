@@ -215,7 +215,7 @@ class UserController extends Controller {
 
 		let getData = ctx.request.body;
 
-		let user = await userService.getUserByUsername(ctx.user.username);
+		let user = await userService.getUserByUsername(ctx.request.user.username);
 
 		if (!user) {
 			let error = new AuthFailed('用户不存在')

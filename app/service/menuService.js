@@ -1,6 +1,39 @@
 'use strict';
 
 const Service = require('egg').Service;
+const { QueryTypes } = require('sequelize');
+
+let getTreeMenu = (dataList) => {
+  let dataArr = [];
+  let childrenArr = [];
+
+  for(let key = 0 ; key < dataList.length ; key++) {
+    if(dataList[key].parent_id === 0) {
+      let itemData = dataList[key]
+      itemData.children = []
+      dataArr.push(itemData)
+    }
+  }
+
+  for(let key = 0 ; key < dataList.length ; key++) {
+    if(dataList[key].parent_id !== 0) {
+      let itemData = dataList[key]
+      if(!childrenArr[itemData.parent_id]) {
+        childrenArr[itemData.parent_id] = []
+      }
+      childrenArr[itemData.parent_id].push(itemData)
+    }
+  }  
+
+  for(let key = 0 ; key < dataArr.length ; key++) {
+    let itemData = dataArr[key]
+    let childrenData = childrenArr[itemData.id]
+    itemData.children = childrenData
+
+    dataArr[key] = itemData
+  } 
+  return dataArr;
+}
 
 class MenuService extends Service {
   async menu(search) {
@@ -28,7 +61,7 @@ class MenuService extends Service {
     const { uid, page, pageSize } = search;
     let offset = (page - 1) * pageSize;
 
-		let userRoleList = await sequelize.query(
+		let userRoleList = await this.app.model.query(
       `
         SELECT e.* 
         FROM 

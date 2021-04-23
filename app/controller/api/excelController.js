@@ -14,7 +14,7 @@ class ExcelController extends Controller {
 
     ctx.set('Content-Disposition', contentDisposition('excel.xlsx'));
 
-    let url = path.resolve(__dirname, '../public/demo.xlsx');
+    let url = path.resolve(__dirname, '../../public/demo.xlsx');
 
     let excelData = xlsx.parse(fs.readFileSync(url));
 
@@ -33,7 +33,7 @@ class ExcelController extends Controller {
   async get2() {
     const { ctx, service, config } = this;
 
-    let url = '/demo.xlsx'
+    let url = '/public/demo.xlsx'
     ctx.redirect(url)
   }	
 }

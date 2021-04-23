@@ -36,7 +36,7 @@ class EmailController extends Controller {
 		}
 
 		let getData = ctx.request.body;
-		let username = ctx.user.username;
+		let username = ctx.request.user.username;
 
 		var option = {
 				service: config.eamil.service,
@@ -95,7 +95,7 @@ class EmailController extends Controller {
 		}
 
 		let getData = ctx.request.body;
-		let username = ctx.user.username;
+		let username = ctx.request.user.username;
 
 		await mq.eamilDLX(username)
 

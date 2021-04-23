@@ -9,7 +9,8 @@ module.exports = app => {
 
 	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController } = controller.api;
 
-	const { auth, page } = middleware;
+	const page = middleware.page();
+	const auth = middleware.auth();
 
 	// user-about
 	apiRouter.post('/login', userController.login);

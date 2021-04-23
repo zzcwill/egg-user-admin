@@ -3,8 +3,6 @@ module.exports = (options) => {
     const { Forbidden } = ctx.helper.httpCode;
     const { cache } = ctx.service;
 
-    console.info(cache)
-
     if(options.noauthArr.indexOf(ctx.url) !== -1) {
       await next();
       return

@@ -36,6 +36,14 @@ module.exports = appInfo => {
     user: 'root',
     password: 'root',    
     database: 'shop',
+    define: {
+      //查询是对字段驼峰类型和下划线类型进行转换
+      underscored: true,
+      //使用自己配置的表名，避免sequelize自动将表名转换为复数
+      freezeTableName: true,
+      //对于create_at,和update_at，禁止查出createAt和updateAt字段，不设置为false，会同时查出来create_at和createAt
+      timestamps: false
+    }    
   };
   
 

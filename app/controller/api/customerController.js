@@ -153,6 +153,8 @@ class CustomerController extends Controller {
 
 		let isOK = await customerService.delete(getData);
 
+		console.info(isOK)
+
 		ctx.body = resOk({
 			isOK: isOK
 		})	

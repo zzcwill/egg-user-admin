@@ -1,4 +1,5 @@
 'use strict';
+const { QueryTypes } = require('sequelize');
 
 const Service = require('egg').Service;
 

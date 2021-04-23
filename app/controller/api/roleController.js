@@ -96,7 +96,7 @@ class RoleController extends Controller {
 		let getData = ctx.request.body;
 		getData.page = lodash.toFinite(getData.page)
 		getData.pageSize = lodash.toFinite(getData.pageSize)
-		getData.uid = ctx.user.uid;
+		getData.uid = ctx.request.user.uid;
 
 		let listData = await roleService.userRole(getData);
 

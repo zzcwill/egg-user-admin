@@ -1,5 +1,7 @@
 'use strict';
 
+const dayjs = require('dayjs');
+
 module.exports = app => {
   const Sequelize = app.Sequelize;
 

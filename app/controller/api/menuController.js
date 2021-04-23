@@ -53,6 +53,13 @@ class MenuController extends Controller {
 		ctx.body = resOk(listData)		
 	}
 	async userMenu() {
+		const { ctx, service, config } = this;
+		const { resOk } = ctx.helper.resData;
+		const { setToken } = ctx.helper.token;
+		const { menuService } = service;
+		const { checkParam, lodash } = ctx.helper;
+		const { Forbidden, ParameterException } = ctx.helper.httpCode;		
+
 		let ruleData = {
 			page: [
 				{
@@ -89,7 +96,7 @@ class MenuController extends Controller {
 		let getData = ctx.request.body;
 		getData.page = lodash.toFinite(getData.page)
 		getData.pageSize = lodash.toFinite(getData.pageSize)
-		getData.uid = ctx.user.uid;
+		getData.uid = ctx.request.user.uid;
 
 
 		let listData = await menuService.userMenu(getData);

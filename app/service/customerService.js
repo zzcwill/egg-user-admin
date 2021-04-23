@@ -51,7 +51,7 @@ class CustomerService extends Service {
 				id: id
 			}
 		})
-    return isOk[0]		
+    return isOk		
 	}
 }
 
