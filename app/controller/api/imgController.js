@@ -8,6 +8,7 @@ const bytes = require('bytes');
 
 const { Controller } = require('egg');
 const { request } = require('https');
+const { nextTick } = require('process');
 
 class ImgController extends Controller {
 	async upload() {	
@@ -17,54 +18,26 @@ class ImgController extends Controller {
 		const { checkParam, lodash } = ctx.helper;
 		const { Forbidden, ParameterException } = ctx.helper.httpCode;
 		
-		// token校验
 		const imgStream = await ctx.getFileStream();
 
-		console.info(imgStream)
-
-		console.info(ctx.request)
-
-		// console.info(ctx.request.body)
-		// console.info(imgStream.fields)
-
-		return
-
-		let token = '';
-		if(imgStream.fields.token) {
-			token = imgStream.fields.token;
-		}
-		// 无带token
-		if (!token) {
-			throw new Forbidden('需要传token');
-			return
-		}
-		let tokenCache = await cache.get(token);
-		if(!tokenCache) {
-			throw new Forbidden('无效的token');
-			return
-		}
-		ctx.request.user = tokenCache;
-
-		console.info(imgStream)
-
-		// if(imgStream.size > config.uploadOption.maxSize) {
-		// 	throw new ParameterException('上传图片太大');
-		// 	await next();
-		// 	return
-		// }
-
+		let size = ctx.request.header['content-length']*1;
 
     try {
+			if(size > config.uploadOption.maxSize) {
+				throw new ParameterException('上传图片太大');
+				return
+			}
+
 			const filename = (new Date()).getTime() + path.basename(imgStream.filename);
 			const target = path.join(config.baseDir, `${config.uploadOption.uploadsUrl}${filename}`);
 			const readFileStream = fs.createWriteStream(target);
 			imgStream.pipe(readFileStream);
 
 			let newImg = {
-				file_type: imgStream.mimetype,
-				// file_size: imgStream.size,
-				file_path: `${config.hostname}:${config.port}/public/${config.uploadOption.uploadsUrl}${imgStream.filename}`,
-				file_name: imgStream.filename
+				file_type: imgStream.mime,
+				file_size: size,
+				file_path: `${config.cluster.hostname}:${config.cluster.listen.port}/public${config.uploadOption.outUploadsUrl}${filename}`,
+				file_name: filename
 			};
 	
 			let imgData = await imgService.add(newImg)
@@ -82,12 +55,8 @@ class ImgController extends Controller {
       // 必须将上传的文件流消费掉，要不然浏览器响应会卡死
       await sendToWormhole(imgStream);
       ctx.logger.warn(err);
-
-			ctx.body = resOk(
-				'',
-				20000,
-				'图片上传失败'
-			)			
+			
+			throw err;
     }
 	}
 }

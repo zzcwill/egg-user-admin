@@ -10,11 +10,7 @@ module.exports = () => {
 					message: '接口不存在'
 				 };
       } else {
-        ctx.body = { 
-					code: 20000,
-					data: '',
-					message: '接口不存在'
-				 };
+        ctx.body = '请求资源不存在'
       }
     }
   };

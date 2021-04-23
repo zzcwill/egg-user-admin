@@ -5,9 +5,6 @@ const path = require('path');
 module.exports = appInfo => {
   const config = {};
 
-  config.config = 'http://127.0.0.1';
-  config.log_dir = path.resolve(__dirname, '../logs');
-
   config.tokenSecurity = {
     secretKey: "zzc",
     // 过期时间 3小时
@@ -21,7 +18,7 @@ module.exports = appInfo => {
     defaultViewEngine: 'ejs',
     mapping: {
       '.ejs': 'ejs',
-    },
+    }
   };
 
   config.multipart = {
@@ -29,7 +26,8 @@ module.exports = appInfo => {
   };
   config.uploadOption = {
 		uploadsUrl: '/imgData/uploads/',
-		maxSize: 1024 * 1024 * 10	
+    outUploadsUrl: '/uploads/',
+		maxSize: 1024 * 1024 * 2
 	};
 
   // add your middleware config here
@@ -39,7 +37,7 @@ module.exports = appInfo => {
     'notfoundHandler',
   ];
   config.auth = {
-    noauthArr: ['/api/login', '/api/createUser', '/api/upload', '/api/wechat/jscode2session', '/api/wechat/getUserInfo'],
+    noauthArr: ['/api/login', '/api/createUser', '/api/wechat/jscode2session', '/api/wechat/getUserInfo'],
     ignore: ctx => {
       if (ctx.request.url.indexOf('/api') === -1) {
         return true;
@@ -66,9 +64,10 @@ module.exports = appInfo => {
   };
 
   config.cluster = {
+    hostname: 'http://127.0.0.1',
     listen: {
       port: 3000,
-    },
+    }
   };
 
   config.logger = {

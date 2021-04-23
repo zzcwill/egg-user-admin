@@ -3,6 +3,7 @@ module.exports = () => {
     try {
       await next()
     } catch (err) {
+
       const { resFail, resCodeArr } = ctx.helper.resData;
       const { HttpException } = ctx.helper.httpCode
 
@@ -13,27 +14,29 @@ module.exports = () => {
       if (isDev) {
         if(!isHttpException) {
           if(err.name === 'SequelizeDatabaseError') {
-            ctx.status = 500;
-            ctx.body = resFail(err.parent.sqlMessage, resCodeArr[1][0]);        
+            ctx.body = resFail(err.parent.sqlMessage, resCodeArr[1][0]);
+            ctx.status = 500;     
           }
           if(err.name !== 'SequelizeDatabaseError') {
             throw err;          
           }     
         } 
         if (isHttpException) {
-          ctx.status = err.status;
+          console.info(resFail(err.msg, err.code))
           ctx.body = resFail(err.msg, err.code);
+          ctx.status = err.status;
+          return
         }        
       }  
       
       if (!isDev) {
         if (isHttpException) {
-          ctx.status = err.status;
           ctx.body = resFail(err.msg, err.code);
+          ctx.status = err.status;
         }  
         if (!isHttpException) {
-          ctx.status = 500; 
           ctx.body = resFail('服务器内部异常', resCodeArr[1][0]);
+          ctx.status = 500;
         }         
       }
     }

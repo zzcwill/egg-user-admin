@@ -62,7 +62,7 @@
 			var _this = this;
 
 			formData.append('file', _this.files[0]);
-			formData.append('token', token);
+			formData.append('type', 'img');
 
 
 			$.ajax({
@@ -70,6 +70,9 @@
 				url: baseUrl + "upload",
 				processData: false,
 				contentType: false,
+				headers:{
+					token: token
+				},				
 				// contentType: 'multipart/form-data',
 				data: formData,
 				success: function (res) {

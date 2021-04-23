@@ -63,7 +63,7 @@ module.exports = appInfo => {
 			user: '841811316@qq.com',
 			pass: 'htunwtlqzxzdbccj'
 		}	
-	}
+	};
 	config.mq = {
 		port: 3300,
 		rabbitMqOption: {
@@ -78,7 +78,7 @@ module.exports = appInfo => {
 					enabled : false  
 			}  
 		}		
-	}
+	};
 
   return config;
 };
