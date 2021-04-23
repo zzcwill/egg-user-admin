@@ -10,7 +10,6 @@ module.exports = app => {
 	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController } = controller.api;
 
 	const page = middleware.page();
-	const auth = middleware.auth();
 
 	// user-about
 	apiRouter.post('/login', userController.login);
@@ -21,7 +20,7 @@ module.exports = app => {
 
 
 	//文件上传
-	apiRouter.post('/upload', auth, imgController.upload);
+	apiRouter.post('/upload', imgController.upload);
 
 
 	//excel导出

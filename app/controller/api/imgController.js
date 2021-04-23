@@ -2,22 +2,12 @@
 
 const path = require('path');
 const fs = require('fs');
-
-// 删除文件
-let fsUnlik = async(path) => {
-	return new Promise((resolve, reject) => {
-		fs.unlink(path, (err) => {
-				if (err) {
-					reject(err);
-				}
-				resolve()
-		});
-
-	})
-}
+const sendToWormhole = require('stream-wormhole');
+const bytes = require('bytes');
 
 
 const { Controller } = require('egg');
+const { request } = require('https');
 
 class ImgController extends Controller {
 	async upload() {	
@@ -28,49 +18,77 @@ class ImgController extends Controller {
 		const { Forbidden, ParameterException } = ctx.helper.httpCode;
 		
 		// token校验
+		const imgStream = await ctx.getFileStream();
+
+		console.info(imgStream)
+
+		console.info(ctx.request)
+
+		// console.info(ctx.request.body)
+		// console.info(imgStream.fields)
+
+		return
+
 		let token = '';
-		if(ctx.request.body.token) {
-			token = ctx.request.body.token;
+		if(imgStream.fields.token) {
+			token = imgStream.fields.token;
 		}
 		// 无带token
 		if (!token) {
 			throw new Forbidden('需要传token');
-			await next();
 			return
 		}
 		let tokenCache = await cache.get(token);
 		if(!tokenCache) {
 			throw new Forbidden('无效的token');
-			await next();
 			return
 		}
 		ctx.request.user = tokenCache;
 
-		let { mimetype, size, filename, path } = ctx.request.file;
+		console.info(imgStream)
 
-		if( size > config.uploadOption.maxSize) {
-			await fsUnlik(path);
-			throw new ParameterException('上传图片太大');
-			await next();
-			return
-		}
+		// if(imgStream.size > config.uploadOption.maxSize) {
+		// 	throw new ParameterException('上传图片太大');
+		// 	await next();
+		// 	return
+		// }
 
-		let newImg = {
-			file_type: mimetype,
-			file_size: size,
-			file_path: `${config.hostname}:${config.port}${config.uploadOption.uploadsUrl}${ctx.request.file.filename}`,
-			file_name: filename
-		};
 
-		let imgData = await imgService.add(newImg)
+    try {
+			const filename = (new Date()).getTime() + path.basename(imgStream.filename);
+			const target = path.join(config.baseDir, `${config.uploadOption.uploadsUrl}${filename}`);
+			const readFileStream = fs.createWriteStream(target);
+			imgStream.pipe(readFileStream);
 
-		if(ctx.request.file !== undefined) {
+			let newImg = {
+				file_type: imgStream.mimetype,
+				// file_size: imgStream.size,
+				file_path: `${config.hostname}:${config.port}/public/${config.uploadOption.uploadsUrl}${imgStream.filename}`,
+				file_name: imgStream.filename
+			};
+	
+			let imgData = await imgService.add(newImg)
+	
+			if(imgData) {
+				ctx.body = resOk(
+					imgData,
+					10000,
+					'图片上传成功'
+				)
+			}
+
+
+    } catch (err) {
+      // 必须将上传的文件流消费掉，要不然浏览器响应会卡死
+      await sendToWormhole(imgStream);
+      ctx.logger.warn(err);
+
 			ctx.body = resOk(
-				imgData,
-				10000,
-				'图片上传成功'
-			)
-		}
+				'',
+				20000,
+				'图片上传失败'
+			)			
+    }
 	}
 }
 

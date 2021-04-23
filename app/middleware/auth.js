@@ -1,9 +1,11 @@
-module.exports = (options) => {
+module.exports = () => {
   return async function auth(ctx, next) {
     const { Forbidden } = ctx.helper.httpCode;
     const { cache } = ctx.service;
 
-    if(options.noauthArr.indexOf(ctx.url) !== -1) {
+    const config = ctx.app.config;
+
+    if(config.auth.noauthArr.indexOf(ctx.url) !== -1) {
       await next();
       return
     }

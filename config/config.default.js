@@ -7,11 +7,7 @@ module.exports = appInfo => {
 
   config.config = 'http://127.0.0.1';
   config.log_dir = path.resolve(__dirname, '../logs');
-	config.uploadOption= {
-		//上传路径-'/imgData/uploads/'
-		uploadsUrl: '/uploads/',
-		maxSize: 1024 * 1024 * 10	
-	},
+
   config.tokenSecurity = {
     secretKey: "zzc",
     // 过期时间 3小时
@@ -28,10 +24,13 @@ module.exports = appInfo => {
     },
   };
 
-  config.news = {
-    pageSize: 2,
-    serverUrl: 'https://cnodejs.org/api/v1',
+  config.multipart = {
+    mode: 'stream'
   };
+  config.uploadOption = {
+		uploadsUrl: '/imgData/uploads/',
+		maxSize: 1024 * 1024 * 10	
+	};
 
   // add your middleware config here
   config.middleware = [
