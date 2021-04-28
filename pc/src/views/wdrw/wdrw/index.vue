@@ -11,7 +11,7 @@
               <el-input v-model="searchForm.cname" placeholder="客户名称" class="same-form-width"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <!-- <el-col :span="8">
             <el-form-item label="流程名称：" prop="ftCode">
               <el-select
                 v-model="searchForm.ftCode"
@@ -45,7 +45,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
         <el-row :gutter="5">
           <el-col :span="8">
@@ -215,8 +215,8 @@ export default {
         page: 1,
         pageSize: 10,
         cname: '',
-        ftCode: 'LOAN_APPLY_FLOW',
-        flowNode: '',
+        // ftCode: 'LOAN_APPLY_FLOW',
+        // flowNode: '',
         createDateTimeStart: '',
         createDateTimeOver: '',
         isProcessed: false,
@@ -232,14 +232,14 @@ export default {
         tableList: [],
         tableTotal: 0,
       },
-      ftCodeOptions: [],
-      flowNodeOptions: [],
+      // ftCodeOptions: [],
+      // flowNodeOptions: [],
       activeTabName: 'todo',
     }
   },
   created() {
-    this.getFtCodeOptions()
-    this.changeFtCode(this.searchForm.ftCode)
+    // this.getFtCodeOptions()
+    // this.changeFtCode(this.searchForm.ftCode)
     this.getTableList()
   },
   methods: {
@@ -295,23 +295,26 @@ export default {
 
       //自行改接扣调用
       let apiData = await mytasksSearch(this.searchForm)
-      this.tableData.tableList = apiData.data
-      this.tableData.tableTotal = apiData.totalItem
+
+      console.info(apiData)
+
+      this.tableData.tableList = apiData.data.list
+      this.tableData.tableTotal = apiData.data.count
       this.tableData.tableLoading = false
     },
-    async getFtCodeOptions() {
-      let apiData = await flowGet()
-      this.ftCodeOptions = apiData.data
-    },
-    async changeFtCode(val) {
-      this.searchForm.flowNode = ''
+    // async getFtCodeOptions() {
+    //   let apiData = await flowGet()
+    //   this.ftCodeOptions = apiData.data
+    // },
+    // async changeFtCode(val) {
+    //   this.searchForm.flowNode = ''
 
-      let data = {
-        businessTypeCode: val,
-      }
-      let apiData = await flowNodes(data)
-      this.flowNodeOptions = apiData.data
-    },
+    //   let data = {
+    //     businessTypeCode: val,
+    //   }
+    //   let apiData = await flowNodes(data)
+    //   this.flowNodeOptions = apiData.data
+    // },
     tabClick(tab) {
       if (tab.name === 'todo') {
         this.searchForm.isProcessed = false

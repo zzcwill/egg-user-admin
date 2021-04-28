@@ -60,17 +60,14 @@ export function logout() {
 //获取用户信息
 export function getInfo() {
   return request({
-    url: '/user/session/get',
+    url: '/userInfo',
     method: 'post'
   })
 }
 //获取路由
 export function getRoutes() {
   return request({
-    url: '/za/menu/list',
-    method: 'post',
-    data: {
-      st: 'CLS_WEB_BEFORE'
-    }
+    url: '/userMenu',
+    method: 'post'
   })
 }

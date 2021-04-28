@@ -35,7 +35,7 @@ http.interceptors.response.use((response) => {
 
   if (res.code !== 10000) {
     Message({
-      message: res.message || 'Error',
+      message: res.msg || 'Error',
       type: 'error',
       duration: 5 * 1000
     })

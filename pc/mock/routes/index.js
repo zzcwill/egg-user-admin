@@ -3,7 +3,7 @@ import { asyncRoutes } from './routes.js'
 export default [
   // mock get all routes form server
   {
-    url: '/za/menu/list',
+    url: '/userMenu',
     type: 'post',
     response: _ => {
       return {

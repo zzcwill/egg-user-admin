@@ -20,7 +20,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       login(userInfo).then(response => {
         let { data } = response
-        data.token = 'test-token'
         setToken(data.token)
         resolve(data)
       }).catch(error => {

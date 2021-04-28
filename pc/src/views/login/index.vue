@@ -2,14 +2,14 @@
   <div class="login-container login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
-      <h3 class="title">zzc-admin</h3>
+      <h3 class="title">shop-admin</h3>
 
-      <el-form-item prop="userName">
+      <el-form-item prop="username">
         <el-input
-          ref="userName"
-          v-model="loginForm.userName"
+          ref="username"
+          v-model="loginForm.username"
           placeholder="用户名"
-          name="userName"
+          name="username"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -39,7 +39,7 @@
 
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2019-2020 zzc-admin All Rights Reserved.</span>
+      <span>Copyright © 2020-2021 shop-admin All Rights Reserved.</span>
     </div>    
   </div>
 </template>
@@ -58,21 +58,19 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length > 10) {
-        callback(new Error('用户密码必须小于10位'))
+      if (value.length > 11) {
+        callback(new Error('用户密码必须小于11位'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        userName: '18088888888',
-        password: '123456a',
-        // userName: '15268100211',
-        // password: ''
+        username: 'zzc',
+        password: 'zzc',
       },
       loginRules: {
-        userName: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,

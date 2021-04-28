@@ -54,7 +54,6 @@ module.exports = appInfo => {
           return true;
         }
         return false;
-
       },
     },
   };

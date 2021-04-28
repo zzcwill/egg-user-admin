@@ -15,7 +15,7 @@ export default [
 
   // get user info
   {
-    url: '/user/session/get',
+    url: '/userInfo',
     type: 'post',
     response: _ => {
       return {

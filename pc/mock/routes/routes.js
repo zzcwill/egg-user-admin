@@ -2,31 +2,31 @@
 
 export const asyncRoutes = [
   {
-    "menuName": "我的任务",
+    "menuName": "订单管理",
     "menuPicUrl": "cs2",
     "menuLevel": "1",
     "menuUrl": "/wdrw",
     "nextSubs": [
       {
-        "menuName": "我的任务",
+        "menuName": "订单查询",
         "menuUrl": "/wdrw/wdrw",
         "menuLevel": "2"
       },
       {
-        "menuName": "权限管理",
+        "menuName": "报表管理",
         "menuUrl": "/wdrw/qxgl",
         "menuLevel": "2"
       }      
     ]
   },  
   {
-    "menuName": "平台管理-demo",
+    "menuName": "page-demo",
     "menuPicUrl": "cs10",
     "menuLevel": "1",
     "menuUrl": "/ptgl",
     "nextSubs": [
       {
-        "menuName": "应用管理",
+        "menuName": "page",
         "menuUrl": "/ptgl/yygl",
         "menuLevel": "2"
       }

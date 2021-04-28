@@ -3,7 +3,7 @@ import request from '@/utils/request'
 //查询列表页start
 export function mytasksSearch(data) {
   return request({
-    url: '/mytasks/search',
+    url: '/order/list',
     method: 'post',
     data   
   })
