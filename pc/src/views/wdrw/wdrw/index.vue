@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card shadow="never" class="m-b-10">
       <div class="el-page-header m-b-20">
-        <div class="el-page-header__content m-lr-auto">我的任务</div>
+        <div class="el-page-header__content m-lr-auto">订单查询</div>
       </div>
       <el-form :inline="true" :model="searchForm" :rules="rules" ref="searchForm" label-width="140px">
         <el-row :gutter="5">
@@ -85,7 +85,7 @@
     </el-card>
 
     <el-tabs v-model="activeTabName" type="card" @tab-click="tabClick">
-      <el-tab-pane label="待办任务" name="todo">
+      <el-tab-pane label="订单列表" name="todo">
         <el-table
           max-height="380"
           v-loading="tableData.tableLoading"
@@ -101,7 +101,7 @@
               <span>{{ row.businessTypeName }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="流程节点" align="center">
+          <el-table-column label="订单号" align="center">
             <template slot-scope="{row}">
               <span>{{ row.currentNodeName}}</span>
             </template>
@@ -137,7 +137,7 @@
           @pagination="getTableList"
         ></pagination>
       </el-tab-pane>
-      <el-tab-pane label="已办任务" name="done">
+      <!-- <el-tab-pane label="已办任务" name="done">
         <el-table
           max-height="380"
           v-loading="tableData.tableLoading"
@@ -185,7 +185,7 @@
           :limit.sync="searchForm.pageSize"
           @pagination="getTableList"
         ></pagination>
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
@@ -296,7 +296,7 @@ export default {
       //自行改接扣调用
       let apiData = await mytasksSearch(this.searchForm)
 
-      console.info(apiData)
+      console.info(apiData.data.list)
 
       this.tableData.tableList = apiData.data.list
       this.tableData.tableTotal = apiData.data.count

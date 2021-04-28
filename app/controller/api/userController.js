@@ -63,7 +63,7 @@ class UserController extends Controller {
 			return
 		}
 
-		let apidata = lodash.pick(user, ['uid', 'username', 'level', 'isOnDuty', 'registerTime']);
+		let apidata = lodash.pick(user, ['uid', 'username', 'level', 'is_on_duty', 'register_time']);
 
 		let token = setToken(apidata);
 
@@ -102,7 +102,7 @@ class UserController extends Controller {
 		const { AuthFailed, ParameterException } = ctx.helper.httpCode;		
 		const { setPassWord, getSalt } = ctx.helper.password;
 
-		let apidata = lodash.pick(ctx.request.user, ['uid', 'username', 'level', 'isOnDuty', 'registerTime'])
+		let apidata = lodash.pick(ctx.request.user, ['uid', 'username', 'level', 'is_on_duty', 'register_time'])
 		ctx.body = resOk(apidata);
 	}
 	async createUser() {
@@ -165,7 +165,7 @@ class UserController extends Controller {
 		// createUser
 		let newUser = await userService.createUser(getData);
 
-		let apidata = lodash.pick(newUser, ['uid', 'username', 'level', 'isOnDuty', 'registerTime']);
+		let apidata = lodash.pick(newUser, ['uid', 'username', 'level', 'is_on_duty', 'register_time']);
 
 		ctx.body = resOk(apidata, 10000, '创建用户成功')
 	}

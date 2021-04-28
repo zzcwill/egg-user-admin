@@ -31,7 +31,7 @@ http.interceptors.request.use(config => {
 
 // 拦截响应response，并做一些错误处理
 http.interceptors.response.use((response) => {
-  const res = response.data
+  const res = response.data 
 
   if (res.code !== 10000) {
     Message({

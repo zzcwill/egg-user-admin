@@ -57,12 +57,12 @@ module.exports = app => {
       create_time : {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
-        allowNull: false,
+        allowNull: false
       },
       modify_time : {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
-        allowNull: false,
+        allowNull: false  
       }    
     },
     {

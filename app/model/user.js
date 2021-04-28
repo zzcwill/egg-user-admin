@@ -1,7 +1,5 @@
 'use strict';
 
-const dayjs = require('dayjs');
-
 module.exports = app => {
   const Sequelize = app.Sequelize;
 
@@ -44,9 +42,6 @@ module.exports = app => {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
         allowNull: false,
-        get() {
-          return dayjs( this.getDataValue('registerTime') ).format('YYYY-MM-DD');
-        },
         // field: 'register_time' // 数据库中字段的实际名称
       },
       openid: {
