@@ -36,7 +36,7 @@ class ImgController extends Controller {
 			let newImg = {
 				file_type: imgStream.mime,
 				file_size: size,
-				file_path: `${config.cluster.hostname}:${config.cluster.listen.port}/public${config.uploadOption.outUploadsUrl}${filename}`,
+				file_url: `${config.cluster.hostname}:${config.cluster.listen.port}/public${config.uploadOption.outUploadsUrl}${filename}`,
 				file_name: filename
 			};
 	

@@ -8,7 +8,7 @@ let getTreeMenu = (dataList) => {
   let childrenArr = [];
 
   for(let key = 0 ; key < dataList.length ; key++) {
-    if(dataList[key].parent_id === 0) {
+    if(!dataList[key].parent_id) {
       let itemData = dataList[key]
       itemData.children = []
       dataArr.push(itemData)
@@ -16,19 +16,22 @@ let getTreeMenu = (dataList) => {
   }
 
   for(let key = 0 ; key < dataList.length ; key++) {
-    if(dataList[key].parent_id !== 0) {
+    if(dataList[key].parent_id) {
       let itemData = dataList[key]
       if(!childrenArr[itemData.parent_id]) {
         childrenArr[itemData.parent_id] = []
       }
       childrenArr[itemData.parent_id].push(itemData)
     }
-  }  
+  }
 
   for(let key = 0 ; key < dataArr.length ; key++) {
     let itemData = dataArr[key]
     let childrenData = childrenArr[itemData.id]
-    itemData.children = childrenData
+
+    if(childrenData) {
+      itemData.children = childrenData
+    }
 
     dataArr[key] = itemData
   } 

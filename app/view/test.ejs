@@ -64,6 +64,8 @@
 				data: apiData,
 				success: function (res) {
 					console.log(res);
+					localStorage.setItem('token', res.data.token);
+					// location.reload();
 				},
 				error: function () {
 				}
@@ -131,7 +133,7 @@
 			var apiData = {
 				token: token,
 				password: 'zzc',
-				newPassword: '123456'
+				newPassword: 'zzc'
 			}
 
 			$.ajax({
