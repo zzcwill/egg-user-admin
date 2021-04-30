@@ -13,22 +13,22 @@ module.exports = app => {
         autoIncrement: true, // 是否自增
       },
       file_type: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
       file_size: {
         type: Sequelize.BIGINT(64),
         allowNull: true,
       },
-      file_path: {
-        type: Sequelize.STRING(255),
+      file_url: {
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
       file_name: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
-      deleted: {
+      is_deleted: {
         type: Sequelize.TINYINT(1),
         allowNull: false,
         defaultValue: 0

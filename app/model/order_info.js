@@ -3,8 +3,8 @@
 module.exports = app => {
   const Sequelize = app.Sequelize;
 
-  const Order_goods = app.model.define(
-    'order_goods', // 默认表名（一般这里写单数）,生成时会自动转换成复数形式。在模型访问时的model.name
+  const Order_info = app.model.define(
+    'order_info', // 默认表名（一般这里写单数）,生成时会自动转换成复数形式。在模型访问时的model.name
     {
       id: {
         type: Sequelize.INTEGER(11), // 字段类型
@@ -20,17 +20,22 @@ module.exports = app => {
         type: Sequelize.INTEGER(11),
         allowNull: false,
       },
-      goods_num: {
+      num: {
         type: Sequelize.INTEGER(11),
         allowNull: false,
       },
-      goods_price: {
+      actual_price: {
         type: Sequelize.DECIMAL(10,2),
         allowNull: false,
       },
-      goods_fee: {
+      actual_fee: {
         type: Sequelize.DECIMAL(10,2),
         allowNull: false,
+      },
+      is_deleted: {
+        type: Sequelize.TINYINT(1),
+        allowNull: false,
+        defaultValue: 0
       }
     },
     {
@@ -42,5 +47,5 @@ module.exports = app => {
     }
   )
 
-  return Order_goods;
+  return Order_info;
 };

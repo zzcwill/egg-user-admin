@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 
 class MenuService extends Service {
   async getOrderById(id) {
-    const { Order, OrderGoods, Goods } = this.ctx.model;
+    const { Order, OrderInfo, Goods } = this.ctx.model;
     const { lodash } = this.ctx.helper;
 
     let user = await Order.findOne({
@@ -16,7 +16,7 @@ class MenuService extends Service {
     return user
   } 
   async list(search) {
-    const { Order, OrderGoods, Goods } = this.ctx.model;
+    const { Order, OrderInfo, Goods } = this.ctx.model;
     const { lodash } = this.ctx.helper;
 
     const { page, pageSize } = search
@@ -34,7 +34,7 @@ class MenuService extends Service {
     }
   }
   async add(orderInfo) {
-    const { Order, OrderGoods, Goods } = this.ctx.model;
+    const { Order, OrderInfo, Goods } = this.ctx.model;
     const { lodash } = this.ctx.helper;
 
     let { order_code, customer_name, sale_type, express_fee, pay_status, order_fee, shoesArr } = orderInfo;
@@ -63,7 +63,7 @@ class MenuService extends Service {
           let item = shoesArr[key]
 
           let sunMoney = item.goods_num * item.goods_price;
-          await OrderGoods.create(
+          await OrderInfo.create(
             {
               order_id: order.id,
               goods_id: item.goods_id,
@@ -113,7 +113,7 @@ class MenuService extends Service {
     return result
   }
   async update(search) {
-    const { Order, OrderGoods, Goods } = this.ctx.model;
+    const { Order, OrderInfo, Goods } = this.ctx.model;
     const { lodash } = this.ctx.helper;
 
 		let { id, customer_name } = search;
@@ -133,7 +133,7 @@ class MenuService extends Service {
     return isOk[0]
   }
 	async delete(search) {
-    const { Order, OrderGoods, Goods } = this.ctx.model;
+    const { Order, OrderInfo, Goods } = this.ctx.model;
     const { lodash } = this.ctx.helper;
 
 		let { id } = search;
@@ -154,7 +154,7 @@ class MenuService extends Service {
         raw:true,
         transaction: t
       });
-      let goodsList = await OrderGoods.findAll({
+      let goodsList = await OrderInfo.findAll({
         where: {
           order_id: id
         },
@@ -188,7 +188,7 @@ class MenuService extends Service {
         )         
       }        
 
-      await OrderGoods.destroy({
+      await OrderInfo.destroy({
         where: {
           order_id: id
         },

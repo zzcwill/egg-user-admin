@@ -13,7 +13,7 @@ module.exports = app => {
         autoIncrement: true, // 是否自增
       },
       goods_code: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
       goods_price: {
@@ -21,15 +21,15 @@ module.exports = app => {
         allowNull: true,
       },
       goods_size: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
       goods_brand: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
       goods_color: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
       goods_cost_price: {
@@ -59,7 +59,12 @@ module.exports = app => {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
         allowNull: false,
-      }								
+      },
+      is_deleted: {
+        type: Sequelize.TINYINT(1),
+        allowNull: false,
+        defaultValue: 0
+      }      							
     },
     {
       tableName: 'goods', // 手动设置表的实际名称

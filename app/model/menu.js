@@ -13,11 +13,11 @@ module.exports = app => {
         autoIncrement: true, // 是否自增
       },
       menu_name: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
       url: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
       parent_id: {
@@ -29,7 +29,7 @@ module.exports = app => {
         allowNull: true,
       },
       logo_tag: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
       level: {
@@ -43,10 +43,10 @@ module.exports = app => {
       paranoid: false, // 设置 deletedAt 字段，当删除一条记录的时候，并不是真的销毁记录，而是通过该字段来标示，即保留数据，进行假删除，默认为false
       freezeTableName: false, // 禁用修改表名; 默认情况下，sequelize将自动将所有传递的模型名称（define的第一个参数）转换为复数。 默认为false
       indexes: [
-        {
-          unique: true,
-          fields: ['business_code']
-        },    
+        // {
+        //   unique: true,
+        //   fields: ['business_code']
+        // },    
       ] // 定义表索引
     }
   )

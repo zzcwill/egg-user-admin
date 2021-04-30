@@ -45,7 +45,7 @@ module.exports = app => {
         // field: 'register_time' // 数据库中字段的实际名称
       },
       openid: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       }
     },

@@ -13,11 +13,11 @@ module.exports = app => {
         autoIncrement: true, // 是否自增
       },
       name: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
       role_code: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
       status: {
@@ -26,7 +26,7 @@ module.exports = app => {
         defaultValue: 1
       },    
       note: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       }
     },

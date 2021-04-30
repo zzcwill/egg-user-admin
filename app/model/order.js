@@ -13,11 +13,19 @@ module.exports = app => {
         autoIncrement: true, // 是否自增
       },
       order_code: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: false,
+      },      
+      customer_id: {
+        type: Sequelize.INTEGER(11), // 字段类型
+        allowNull: false, // 是否允许为NULL
+      },
+      shop_id: {
+        type: Sequelize.INTEGER(11), // 字段类型
+        allowNull: false, // 是否允许为NULL
       },
       customer_name: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
       phone: {
@@ -25,7 +33,7 @@ module.exports = app => {
         allowNull: true,
       },
       address: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(200),
         allowNull: true,
       },
   
@@ -37,21 +45,13 @@ module.exports = app => {
         type: Sequelize.DECIMAL(10,2),
         allowNull: false,
         defaultValue: 0
-      },    
-      pay_type: {
-        type: Sequelize.STRING(255),
-        allowNull: true,
-      },
-      pay_status : {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-      },
-      order_status : {
-        type: Sequelize.STRING(255),
-        allowNull: true,
       },
       order_fee : {
-        type: Sequelize.STRING(255),
+        type: Sequelize.DECIMAL(10,2),
+        allowNull: false,
+      },
+      order_discount_fee : {
+        type: Sequelize.DECIMAL(10,2),
         allowNull: false,
       },
       create_time : {
@@ -63,7 +63,12 @@ module.exports = app => {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
         allowNull: false  
-      }    
+      },
+      is_deleted: {
+        type: Sequelize.TINYINT(1),
+        allowNull: false,
+        defaultValue: 0
+      }          
     },
     {
       tableName: 'order', // 手动设置表的实际名称
