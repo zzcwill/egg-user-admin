@@ -44,7 +44,6 @@ module.exports = appInfo => {
       //对于create_at,和update_at，禁止查出createAt和updateAt字段，不设置为false，会同时查出来create_at和createAt
       timestamps: false
     },
-    timezone: '+08:00',
     // 修改时间格式
     dialectOptions: {
       dateStrings: true,
