@@ -112,7 +112,7 @@ CREATE TABLE `goods` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `key_goods_code` (`goods_code`) USING BTREE
+  UNIQUE KEY `ukey_goods_code` (`goods_code`, `goods_color`, `goods_sex`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='商品表';
 
 DROP TABLE IF EXISTS `customer`;
