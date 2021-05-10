@@ -74,23 +74,30 @@
 					  {
 							goods_id : 1,
 							goods_num: 5,
-							goods_price: 80
+							goods_price: 100
 						},
 					  {
 							goods_id : 2,
 							goods_num: 5,
-							goods_price: 80
+							goods_price: 100
 						}						
 				]
 			var shoesArr = JSON.stringify(arr)
 
 			var apiData = {
 				token: token,
-				customer_name: '订单客户' + random(),
+
+				order_code: getTimeMs(),
+				customer_name: '小郑',
+				customer_id: 3,
+				phone: '18042434282',
+				address: '浙江省杭州江干区香滨湾花园10幢2单元',
+				shop_id: '1',
+
 				sale_type: 1,
 				express_fee: 10,
-				pay_status: 1,
-				order_fee: 2000 + random(),
+				order_fee: 1000,
+				order_discount_fee: 0,
 				shoesArr: shoesArr
 			}
 
