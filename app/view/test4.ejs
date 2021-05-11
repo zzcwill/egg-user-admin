@@ -73,13 +73,13 @@
 			var arr = [
 					  {
 							goods_id : 1,
-							goods_num: 5,
-							goods_price: 100
+							num: 4,
+							actual_price: 100
 						},
 					  {
 							goods_id : 2,
-							goods_num: 5,
-							goods_price: 100
+							num: 4,
+							actual_price: 100
 						}						
 				]
 			var shoesArr = JSON.stringify(arr)
@@ -95,7 +95,7 @@
 
 				sale_type: 1,
 				express_fee: 10,
-				order_fee: 1000,
+				order_fee: 800,
 				order_discount_fee: 0,
 				shoesArr: shoesArr
 			}
@@ -117,8 +117,7 @@
 
 			var apiData = {
 				token: token,
-				id: 37,
-				customer_name: '更新的test客户'
+				id: 6
 			}
 
 			$.ajax({
@@ -138,7 +137,7 @@
 
 			var apiData = {
 				token: token,
-				id: 851
+				id: 8
 			}
 
 			$.ajax({

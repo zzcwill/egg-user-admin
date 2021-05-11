@@ -37,7 +37,7 @@ class MenuService extends Service {
     const { Order, OrderInfo, Goods } = this.ctx.model;
     const { lodash } = this.ctx.helper;
 
-    let { order_code, customer_name, sale_type, express_fee, pay_status, order_fee, shoesArr } = orderInfo;
+    let { order_code, shoesArr } = orderInfo;
 
     let t = null;
     //事务
@@ -48,7 +48,7 @@ class MenuService extends Service {
     try {
         t = await this.ctx.model.transaction();
       
-        let newOrder = lodash.pick(orderInfo, ['order_code', 'customer_name', 'sale_type', 'express_fee', 'pay_status', 'order_fee']);
+        let newOrder = lodash.pick(orderInfo, ['order_code', 'customer_name', 'customer_id', 'phone', 'address', 'shop_id', 'sale_type', 'express_fee', 'order_fee', 'order_discount_fee']);
         await Order.create(newOrder, { transaction: t })
     
         let order = await Order.findOne({
@@ -62,39 +62,17 @@ class MenuService extends Service {
         for(let key = 0 ; key < shoesArr.length ; key++ ) {
           let item = shoesArr[key]
 
-          let sunMoney = item.goods_num * item.goods_price;
+          let sunMoney = item.num * item.actual_price;
           await OrderInfo.create(
             {
               order_id: order.id,
               goods_id: item.goods_id,
-              goods_num: item.goods_num,
-              goods_price: item.goods_price,
-              goods_fee: sunMoney
+              num: item.num,
+              actual_price: item.actual_price,
+              actual_fee: sunMoney
             },
             { transaction: t }
-          );
-
-          let itemGoods = await Goods.findOne({
-            where: {
-              id: item.goods_id
-            },
-            raw:true,
-            transaction: t
-          })
-
-          let stock = itemGoods.goods_stock - item.goods_num;
-          await Goods.update(
-            {
-              goods_stock: stock,
-            },
-            {
-              //条件
-              where: {
-                id: item.goods_id
-              },
-              transaction: t
-            }
-          )          
+          );       
         }
         
         await t.commit();
@@ -153,40 +131,7 @@ class MenuService extends Service {
         },
         raw:true,
         transaction: t
-      });
-      let goodsList = await OrderInfo.findAll({
-        where: {
-          order_id: id
-        },
-        raw:true,
-        transaction: t
-      }); 
-      
-      for(let key = 0 ; key < goodsList.length ; key++ ) {
-        let item = goodsList[key]
-
-        let itemGoods = await Goods.findOne({
-          where: {
-            id: item.goods_id
-          },
-          raw:true,
-          transaction: t
-        })
-
-        let stock = itemGoods.goods_stock + item.goods_num;
-        await Goods.update(
-          {
-            goods_stock: stock,
-          },
-          {
-            //条件
-            where: {
-              id: item.goods_id
-            },
-            transaction: t
-          }
-        )         
-      }        
+      });       
 
       await OrderInfo.destroy({
         where: {

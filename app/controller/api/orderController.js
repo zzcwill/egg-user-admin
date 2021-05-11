@@ -99,18 +99,6 @@ class OrderController extends Controller {
 					}
 				},
 			],
-			pay_status: [
-				{
-					ruleName: 'required',
-					rule: (val) => {
-						var isOk = true
-						if (!val) {
-							isOk = false
-						}
-						return isOk
-					}
-				},
-			],
 			order_fee: [
 				{
 					ruleName: 'required',
@@ -155,22 +143,22 @@ class OrderController extends Controller {
 		getData.shoesArr = JSON.parse(getData.shoesArr)
 
 
-		let { shoesArr } = getData;
-		let goodsStockList = await Promise.all(
-			shoesArr.map(
-				async (item) =>{
-					let itemGoods = await goodsService.getGoodsById(item.goods_id)
-					let isCanBuy = item.goods_num <= itemGoods.goods_stock ? 1 : 0
-					return isCanBuy
-				}
-			)
-		)
+		// let { shoesArr } = getData;
+		// let goodsStockList = await Promise.all(
+		// 	shoesArr.map(
+		// 		async (item) =>{
+		// 			let itemGoods = await goodsService.getGoodsById(item.goods_id)
+		// 			let isCanBuy = item.goods_num <= itemGoods.goods_stock ? 1 : 0
+		// 			return isCanBuy
+		// 		}
+		// 	)
+		// )
 
-		if(goodsStockList.indexOf(0) !== -1) {
-			let error = new ParameterException('商品库存不足')
-			throw error;			
-			return
-		}
+		// if(goodsStockList.indexOf(0) !== -1) {
+		// 	let error = new ParameterException('商品库存不足')
+		// 	throw error;			
+		// 	return
+		// }
 
 		
 		let result = await orderService.add(getData);
