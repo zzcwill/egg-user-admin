@@ -43,7 +43,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-user-admin",
+    "start": "egg-scripts start --title=egg-server-user-admin",
     "stop": "egg-scripts stop --title=egg-server-user-admin",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
