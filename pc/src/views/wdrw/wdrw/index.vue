@@ -7,10 +7,15 @@
       <el-form :inline="true" :model="searchForm" :rules="rules" ref="searchForm" label-width="140px">
         <el-row :gutter="5">
           <el-col :span="8">
-            <el-form-item label="客户名称：" prop="cname">
-              <el-input v-model="searchForm.cname" placeholder="客户名称" class="same-form-width"></el-input>
+            <el-form-item label="客户名称：" prop="customer_name">
+              <el-input v-model="searchForm.customer_name" placeholder="请输入客户名称" class="same-form-width"></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="8">
+            <el-form-item label="手机：" prop="phone">
+              <el-input v-model="searchForm.phone" placeholder="请输入手机号" class="same-form-width"></el-input>
+            </el-form-item>
+          </el-col>          
           <!-- <el-col :span="8">
             <el-form-item label="流程名称：" prop="ftCode">
               <el-select
@@ -164,55 +169,6 @@
           @pagination="getTableList"
         ></pagination>
       </el-tab-pane>
-      <!-- <el-tab-pane label="已办任务" name="done">
-        <el-table
-          max-height="380"
-          v-loading="tableData.tableLoading"
-          :data="tableData.tableList"
-          border
-          fit
-          highlight-current-row
-        >
-          <el-table-column label="流程名称" align="center">
-            <template slot-scope="{row}">
-              <span>{{ row.businessTypeName }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="流程节点" align="center">
-            <template slot-scope="{row}">
-              <span>{{ row.currentNodeName}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="业务编号" align="center">
-            <template slot-scope="{row}">
-              <span>{{ row.businessNum}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="客户名称" align="center">
-            <template slot-scope="{row}">
-              <span>{{ row.customerName}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="二手车业务" align="center">
-            <template slot-scope="{row}">
-              <span>{{ row.isSecondHandCar | isSecondHandCarFilter }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" align="center">
-            <template slot-scope="{row}">
-              <el-button @click="toOperate3(row)" type="text">查看详情</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <pagination
-          v-show="tableData.tableTotal>0"
-          :total="tableData.tableTotal"
-          :page.sync="searchForm.page"
-          :limit.sync="searchForm.pageSize"
-          @pagination="getTableList"
-        ></pagination>
-      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
@@ -224,6 +180,10 @@ import {
   customerCreditInfoDownload,
 } from '@/api/wdrw/wdrw'
 import Pagination from '@/components/Pagination'
+
+import {
+  formateObjToParamStr
+} from '@/utils/config'
 
 export default {
   name: 'wdrwWdrw',
@@ -245,12 +205,10 @@ export default {
       searchForm: {
         page: 1,
         pageSize: 10,
-        cname: '',
-        // ftCode: 'LOAN_APPLY_FLOW',
-        // flowNode: '',
+        customer_name: '',
+        phone: '',
         createDateTimeStart: '',
-        createDateTimeOver: '',
-        isProcessed: false,
+        createDateTimeOver: ''
       },
       rules: {
         // cname: [{ required: true, message: '请输入客户信息', trigger: 'blur' }],
@@ -345,10 +303,8 @@ export default {
     // },
     tabClick(tab) {
       if (tab.name === 'todo') {
-        this.searchForm.isProcessed = false
       }
       if (tab.name === 'done') {
-        this.searchForm.isProcessed = true
       }
       this.getTableList()
     },
@@ -356,15 +312,16 @@ export default {
       this.$router.push({
         path: '/wdrw/wdrw/page/flow',
         query: {
-          orderId: row.id,
+          orderId: '',
           type: 'new'
         }
       })
     },
     exportData() {
-      let data = '?customerName=老大哥'
-      let exportUrl = customerCreditInfoDownload() + data
-      window.location.href = exportUrl
+      let data = formateObjToParamStr(this.searchForm)
+      console.info(data)
+      // let exportUrl = customerCreditInfoDownload() + data
+      // window.location.href = exportUrl
     },
   },
 }

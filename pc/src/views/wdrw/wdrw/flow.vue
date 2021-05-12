@@ -9,7 +9,7 @@
           <el-tabs type="border-card" class="m-b-20">
             <el-tab-pane>
               <span slot="label">
-                <i class="el-icon-date"></i> 客户信息
+                <i class="el-icon-date"></i>订单信息
               </span>
               <el-form :inline="true" :model="searchForm" :rules="rules" ref="searchForm" label-width="140px">
                 <el-row :gutter="5">

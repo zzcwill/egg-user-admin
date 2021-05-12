@@ -64,3 +64,12 @@ export function validatenull(val) {
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
+
+// 对象转url查询参数
+export function formateObjToParamStr(paramObj) {
+  const sdata = []
+  for (let attr in paramObj) {
+    sdata.push(`${attr}=${paramObj[attr]}`)
+  }
+  return sdata.join('&')
+}

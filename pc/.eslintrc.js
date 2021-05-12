@@ -18,6 +18,8 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-unused-vars": "off",
     "no-prototype-builtins": "off",
+    "no-empty": 'off',
+    "no-extra-semi": 'off',
     // vue相关
     //组件大小写未使用
     "vue/no-unused-components": ["error", {
