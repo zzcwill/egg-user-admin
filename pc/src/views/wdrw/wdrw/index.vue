@@ -77,6 +77,7 @@
             <el-form-item>
               <el-button type="primary" @click="searchTable('searchForm')">查询</el-button>
               <el-button @click="resetSearchForm('searchForm')">重置</el-button>
+              <el-button type="primary" @click="newData()">新增订单</el-button>
               <el-button type="primary" @click="exportData()">导出</el-button>
             </el-form-item>
           </el-col>
@@ -95,36 +96,62 @@
           highlight-current-row
           @selection-change="tableSelectionChange"
         >
-          <el-table-column type="selection" width="60" align="center"></el-table-column>
-          <el-table-column label="流程名称" align="center">
+          <!-- <el-table-column type="selection" width="60" align="center"></el-table-column> -->
+          <el-table-column label="订单流水号" align="center" min-width="130">
             <template slot-scope="{row}">
-              <span>{{ row.businessTypeName }}</span>
+              <span>{{ row.order_code }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="订单号" align="center">
+          <el-table-column label="订单类型" align="center">
             <template slot-scope="{row}">
-              <span>{{ row.currentNodeName}}</span>
+              <span>{{ row.sale_type | sale_typeFilter }}</span>
             </template>
-          </el-table-column>
-          <el-table-column label="业务编号" align="center">
-            <template slot-scope="{row}">
-              <span>{{ row.businessNum}}</span>
-            </template>
-          </el-table-column>
+          </el-table-column>         
           <el-table-column label="客户名称" align="center">
             <template slot-scope="{row}">
-              <span>{{ row.customerName}}</span>
+              <span>{{ row.customer_name}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="二手车业务" align="center">
+          <el-table-column label="手机号" align="center">
             <template slot-scope="{row}">
-              <span>{{ row.isSecondHandCar | isSecondHandCarFilter }}</span>
+              <span>{{ row.phone}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" align="center">
+          <el-table-column label="地址" align="center">
             <template slot-scope="{row}">
-              <el-button @click="toOperate(row)" type="text">{{ row.currentNodeName }}</el-button>
-              <el-button @click="toOperate2(row)" type="text" v-if="row.businessTypeCode === 'LOAN_APPLY_FLOW'">多媒体资料</el-button>
+              <span>{{ row.address }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="快递费用" align="center">
+            <template slot-scope="{row}">
+              <span>{{ row.express_fee }}</span>
+            </template>
+          </el-table-column>  
+          <el-table-column label="订单实际总额" align="center">
+            <template slot-scope="{row}">
+              <span>{{ row.order_fee }}</span>
+            </template>
+          </el-table-column> 
+          <el-table-column label="订单优惠总额" align="center">
+            <template slot-scope="{row}">
+              <span>{{ row.order_discount_fee }}</span>
+            </template>
+          </el-table-column> 
+          <el-table-column label="订单生成时间" align="center" min-width="130">
+            <template slot-scope="{row}">
+              <span>{{ row.create_time }}</span>
+            </template>
+          </el-table-column>  
+          <el-table-column label="订单修改时间" align="center" min-width="130">
+            <template slot-scope="{row}">
+              <span>{{ row.modify_time }}</span>
+            </template>
+          </el-table-column>                                                      
+          <el-table-column label="操作" align="center" min-width="180">
+            <template slot-scope="{row}">
+              <el-button @click="toOperate(row)" type="text">修改</el-button>
+              <el-button @click="toOperate2(row)" type="text">删除</el-button>
+              <el-button @click="toOperate3(row)" type="text">查看详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -203,8 +230,12 @@ export default {
   filters: {
     isSecondHandCarFilter(value) {
       let arr = ['', '是', '否']
-      return arr[value] || '--'
+      return arr[value] || '-'
     },
+    sale_typeFilter(value) {
+      let arr = ['', '零售', '批发', '代卖']
+      return arr[value] || '-'
+    }
   },
   components: {
     Pagination,
@@ -264,30 +295,27 @@ export default {
       this.$router.push({
         path: '/wdrw/wdrw/page/flow',
         query: {
-          projectId: row.businessId,
-          bopInfoId: row.businessObjectProcessInfoId,
-          currentNodeName: row.currentNodeName
-        },
+          orderId: row.id,
+          type: 'change'
+        }
       })
     },
     toOperate2(row) {
       this.$router.push({
-        path: '/wdrw/wdrw/page/imgInfo',
+        path: '/wdrw/wdrw/page/flow',
         query: {
-          projectId: row.businessId,
-          currentNodeName: row.currentNodeName,
-          space: 'LOAN',
-          releventFlow: row.businessTypeCode,
-          releventFlowNode: row.currentNodeKey
-        },
+          orderId: row.id,
+          type: 'delete'
+        }
       })
     },
     toOperate3(row) {
       this.$router.push({
         path: '/wdrw/wdrw/page/info',
         query: {
-          projectId: row.businessId
-        },
+          orderId: row.id,
+          type: 'info'
+        }
       })
     },    
     async getTableList() {
@@ -323,6 +351,15 @@ export default {
         this.searchForm.isProcessed = true
       }
       this.getTableList()
+    },
+    newData() {
+      this.$router.push({
+        path: '/wdrw/wdrw/page/flow',
+        query: {
+          orderId: row.id,
+          type: 'new'
+        }
+      })
     },
     exportData() {
       let data = '?customerName=老大哥'
