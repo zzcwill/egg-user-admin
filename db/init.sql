@@ -139,7 +139,7 @@ CREATE TABLE `order` (
   `phone` varchar(11) DEFAULT NULL COMMENT '发货手机号',
 	`address` varchar(200) DEFAULT NULL COMMENT '详细地址',
 
-	`sale_type` varchar(200) NOT NULL COMMENT '1零售 2批发 3代卖',
+	`sale_type` tinyint(2) NOT NULL COMMENT '1零售 2批发 3代卖',
   `express_fee` decimal(10,2) NOT NULL DEFAULT 0 COMMENT '快递费',
 	`order_fee` decimal(10,2) NOT NULL COMMENT '订单实际总额',
   `order_discount_fee` decimal(10,2) NOT NULL DEFAULT 0 COMMENT '订单优惠总额',

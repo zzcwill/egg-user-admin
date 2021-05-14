@@ -22,7 +22,7 @@ class MenuService extends Service {
     const { page, pageSize, customer_name, phone, createDateTimeStart, createDateTimeOver } = search
 
     const Op = this.ctx.app.Sequelize.Op;
-    console.info(Op)
+    // console.info(Op)
 
     let whereData = {}
 
@@ -119,7 +119,7 @@ class MenuService extends Service {
 
       
     } catch (error) {
-      console.info(error)
+      // console.info(error)
       result = {
         error: error,
         isOK: 0       

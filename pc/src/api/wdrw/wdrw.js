@@ -22,6 +22,13 @@ export function orderDelete(data) {
     data   
   })
 }
+export function orderInfo(data) {
+  return request({
+    url: '/order/info',
+    method: 'post',
+    data   
+  })
+}
 
 
 export function flowGet() {

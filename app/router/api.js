@@ -44,6 +44,7 @@ module.exports = app => {
 	apiRouter.post('/order/add', orderController.add);
 	apiRouter.post('/order/update', orderController.update);
 	apiRouter.post('/order/delete', orderController.delete);
+	apiRouter.post('/order/info', orderController.info);
 
 	//客户
 	apiRouter.post('/customer/list', customerController.list);

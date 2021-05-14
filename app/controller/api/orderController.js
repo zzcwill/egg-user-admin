@@ -262,6 +262,49 @@ class OrderController extends Controller {
 		ctx.body = resOk({
 			isOK: result.isOK
 		});
+	}
+	async info() {
+		const { ctx, service, config } = this;
+		const { resOk } = ctx.helper.resData;
+		const { setToken } = ctx.helper.token;
+		const { orderService, goodsService  } = service;
+		const { checkParam, lodash } = ctx.helper;
+		const { getOrderCode } = ctx.helper.order;
+		const { Forbidden, ParameterException } = ctx.helper.httpCode;
+
+		let ruleData = {
+			id: [
+				{
+					ruleName: 'required',
+					rule: (val) => {
+						var isOk = true
+						if (!val) {
+							isOk = false
+						}
+						return isOk
+					}
+				},
+			]
+		}
+		let msgParam = checkParam.check(ctx, ruleData)
+		if (msgParam) {
+			let error = new ParameterException(msgParam)
+			throw error;
+			return
+		}
+
+		let getData = ctx.request.body;
+
+		let order = await orderService.getOrderById(getData.id);
+
+		if (!order) {
+			let error = new ParameterException('该订单不存在')
+			throw error;
+			return
+		}
+
+
+		ctx.body = resOk(order);
 	}	
 }
 

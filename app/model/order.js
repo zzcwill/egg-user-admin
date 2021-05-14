@@ -38,7 +38,7 @@ module.exports = app => {
       },
   
       sale_type: {
-        type: Sequelize.STRING(256),
+        type: Sequelize.TINYINT(2),
         allowNull: false,
       },
       express_fee : {

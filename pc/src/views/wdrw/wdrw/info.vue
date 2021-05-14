@@ -2,21 +2,21 @@
   <div class="app-container">
     <el-card shadow="never" class="m-b-10">
       <div class="el-page-header m-b-20">
-        <div class="el-page-header__content m-lr-auto">贷款详情</div>
+        <div class="el-page-header__content m-lr-auto">订单详情</div>
       </div>
       <el-tabs type="card">
         <el-tab-pane label="基本信息">
-          <el-tabs type="border-card" v-for="dom in domArr" :key="dom" class="m-b-20">
+          <el-tabs type="border-card" class="m-b-20">
             <el-tab-pane>
               <span slot="label">
                 <i class="el-icon-date"></i>客户信息
               </span>
               <el-form :inline="true" :model="searchForm" :rules="rules" ref="searchForm" label-width="140px" disabled>
-                <el-row :gutter="5" v-for="dom2 in domArr2" :key="dom2">
+                <el-row :gutter="5">
                   <el-col :span="8">
-                    <el-form-item label="客户名称：" prop="customerName" >
+                    <el-form-item label="客户名称：" prop="customer_name" >
                       <el-input
-                        v-model="searchForm.customerName"
+                        v-model="searchForm.customer_name"
                         placeholder="客户名称"
                         class="same-form-width"
                         disabled
@@ -24,32 +24,14 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="8">
-                    <el-form-item label="户籍性质：" prop="domicileType" >
+                    <el-form-item label="销售类型：" prop="sale_type" >
                       <el-select
-                        v-model="searchForm.domicileType"
+                        v-model="searchForm.sale_type"
                         placeholder="请选择"
                         class="same-form-width"
                       >
                         <el-option
-                          v-for="item in domicileTypeOptions"
-                          :key="item.value"
-                          :label="item.name"
-                          :value="item.value"
-                        ></el-option>
-                      </el-select>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item label="性别：" prop="sex">
-                      <el-select
-                        v-model="searchForm.sex"
-                        placeholder="请选择"
-                        clearable
-                        filterable
-                        class="same-form-width"
-                      >
-                        <el-option
-                          v-for="item in sexOptions"
+                          v-for="item in sale_typeOptions"
                           :key="item.value"
                           :label="item.name"
                           :value="item.value"
@@ -62,13 +44,13 @@
             </el-tab-pane>
           </el-tabs>
         </el-tab-pane>
-        <el-tab-pane label="过程信息">过程信息</el-tab-pane>
+        <!-- <el-tab-pane label="过程信息">过程信息</el-tab-pane> -->
       </el-tabs>
     </el-card>
   </div>
 </template>
 <script>
-import { loanApprovalInfoGetApprovalBaseInfo } from '@/api/wdrw/wdrw'
+import { orderInfo } from '@/api/wdrw/wdrw'
 
 export default {
   name: 'wdrwWdrwInfo',
@@ -77,55 +59,42 @@ export default {
     return {
       projectId: '',
       searchForm: {
-        customerName: '',
-        domicileType: '',
-        sex: '',
+        customer_name: '',
+        sale_type: ''
       },
       rules: {
-        // customerName: [{ required: true, message: '请输入客户信息', trigger: 'blur' }],
+        // customer_name: [{ required: true, message: '请输入客户信息', trigger: 'blur' }],
       },
-      domicileTypeOptions: [
+      sale_typeOptions: [
         {
-          name: '农业',
+          name: '零售',
           value: 1,
         },
         {
-          name: '非农',
+          name: '批发',
           value: 2,
         },
-      ],
-      sexOptions: [
         {
-          name: '男',
-          value: 1,
-        },
-        {
-          name: '女',
-          value: 0,
-        },
-      ],
-      domArr: [1,2],
-      domArr2: [1,2,3,4],      
+          name: '代卖',
+          value: 3,
+        }
+      ]   
     }
   },
   created() {
-    this.projectId = this.$route.query.projectId
+    this.orderId = this.$route.query.orderId
     this.getLoanInfo()
   },
   methods: {
     async getLoanInfo() {
       //自行改接扣调用
       let params = {
-        loanApplyId: this.projectId,
+        id: this.orderId,
       }
-      let apiData = await loanApprovalInfoGetApprovalBaseInfo(params)
+      let apiData = await orderInfo(params)
 
-      this.searchForm = this._.pick(apiData.data, [
-        'customerName',
-        'domicileType',
-        'sex',
-      ])
-    },
+      this.searchForm = apiData.data
+    }
   },
 }
 </script>
