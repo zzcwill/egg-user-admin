@@ -54,9 +54,9 @@
         </el-row>
         <el-row :gutter="5">
           <el-col :span="8">
-            <el-form-item label="开始提交时间：" prop="createDateTimeOver">
+            <el-form-item label="开始提交时间：" prop="createDateTimeStart">
               <el-date-picker
-                v-model="searchForm.createDateTimeOver"
+                v-model="searchForm.createDateTimeStart"
                 value-format="yyyy-MM-dd"
                 type="date"
                 placeholder="请选择"
@@ -65,9 +65,9 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结束提交时间：" prop="createDateTimeStart">
+            <el-form-item label="结束提交时间：" prop="createDateTimeOver">
               <el-date-picker
-                v-model="searchForm.createDateTimeStart"
+                v-model="searchForm.createDateTimeOver"
                 value-format="yyyy-MM-dd"
                 type="date"
                 placeholder="请选择"
@@ -155,7 +155,7 @@
           <el-table-column label="操作" align="center" min-width="180">
             <template slot-scope="{row}">
               <el-button @click="toOperate(row)" type="text">修改</el-button>
-              <el-button @click="toOperate2(row)" type="text">删除</el-button>
+              <el-button @click="toDelete(row)" type="text">删除</el-button>
               <el-button @click="toOperate3(row)" type="text">查看详情</el-button>
             </template>
           </el-table-column>
@@ -174,7 +174,9 @@
 </template>
 <script>
 import {
-  mytasksSearch,
+  orderList,
+  orderDelete,
+
   flowGet,
   flowNodes,
   customerCreditInfoDownload,
@@ -258,14 +260,27 @@ export default {
         }
       })
     },
-    toOperate2(row) {
-      this.$router.push({
-        path: '/wdrw/wdrw/page/flow',
-        query: {
-          orderId: row.id,
-          type: 'delete'
-        }
-      })
+    toDelete(row) {
+        let that = this;
+        this.$confirm('是否删除该订单?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          let apiData = {
+            id: row.id
+          }
+          console.info(apiData)
+          let toApi = await orderDelete(apiData)
+
+          if(toApi.data.isOK === 1) {
+            that.$message({
+              type: 'success',
+              message: '订单删除成功'
+            }); 
+            that.getTableList();                      
+          }
+        })
     },
     toOperate3(row) {
       this.$router.push({
@@ -280,7 +295,7 @@ export default {
       this.tableData.tableLoading = true
 
       //自行改接扣调用
-      let apiData = await mytasksSearch(this.searchForm)
+      let apiData = await orderList(this.searchForm)
 
       console.info(apiData.data.list)
 
@@ -322,8 +337,8 @@ export default {
       console.info(data)
       // let exportUrl = customerCreditInfoDownload() + data
       // window.location.href = exportUrl
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

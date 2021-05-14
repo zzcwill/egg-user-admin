@@ -14,7 +14,7 @@ let getOrderCode = () => {
 	mi = mi < 10 ? '0' + mi : '' + mi;
 	let s = date.getSeconds();
 	s = s < 10 ? '0' + s : '' + s;
-	let str = y + '_' + m + '_' + d + '_' + h + '_' + mi + '_' + s;
+	let str = y + '' + m + '' + d + '' + h + '' + mi + '' + s;
 	return str;
 }
 

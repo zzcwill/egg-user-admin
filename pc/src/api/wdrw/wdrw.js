@@ -1,13 +1,29 @@
 import request from '@/utils/request'
 
 //查询列表页start
-export function mytasksSearch(data) {
+export function orderList(data) {
   return request({
     url: '/order/list',
     method: 'post',
     data   
   })
 }
+export function orderUpdate(data) {
+  return request({
+    url: '/order/update',
+    method: 'post',
+    data   
+  })
+}
+export function orderDelete(data) {
+  return request({
+    url: '/order/delete',
+    method: 'post',
+    data   
+  })
+}
+
+
 export function flowGet() {
   return request({
     url: '/flow/get',
