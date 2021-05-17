@@ -217,7 +217,7 @@ export default {
         },
       ],
     }
-  },
+  },  
   created() {
     this.orderId = this.$route.query.orderId
     this.getLoanInfo()

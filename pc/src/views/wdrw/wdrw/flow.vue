@@ -279,7 +279,7 @@ import {
 } from '@/api/wdrw/wdrw'
 
 export default {
-  name: 'wdrwWdrwInfo',
+  name: 'wdrwWdrwPageFlow',
   filters: {
     goods_sexFilter(value) {
       let arr = ['女', '男']
@@ -345,6 +345,14 @@ export default {
       isNewPerson: true,
     }
   },
+  computed: {
+    visitedViews() {
+      return this.$store.state.tagsView.visitedViews
+    },
+    routes() {
+      return this.$store.state.permission.routes
+    }
+  },  
   created() {
     this.searchForm = {
       ...this.searchForm,
@@ -390,7 +398,7 @@ export default {
       this.searchForm = {
         ...this.searchForm,
         ...apiData.data,
-        shoesArr: '',
+        shoesArr: JSON.stringify(apiData.data.shoesArr)
       }
       this.shoesArr = apiData.data.shoesArr
 
@@ -424,8 +432,13 @@ export default {
             submitData = await orderUpdate(this.searchForm)
           }
           if (submitData.data.isOK === 1) {
+            that.cancelSearchForm()
             this.$message('订单处理成功')
-            this.cancelSearchForm()
+            that.cancelSearchForm()
+          }
+          if (submitData.data.isOK === 0) {
+            that.cancelSearchForm()
+            this.$message('订单处理失败')
           }
         })
         .catch(() => {})
@@ -508,7 +521,7 @@ export default {
     toSum(arr) {
       var sum = 0;
       for (let i = 0; i < arr.length ; i++) {
-          sum += arr[i].actual_fee;
+          sum += arr[i].actual_fee*1;
       }
       return sum;
     },
