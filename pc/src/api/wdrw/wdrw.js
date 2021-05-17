@@ -50,8 +50,8 @@ export function goodsAllList() {
 		method: 'post',	
   })
 }
-export function customerCreditInfoDownload() {
-  return  process.env.VUE_APP_BASE_API + '/customer/creditInfo/download?customerName'
+export function exportOrder() {
+  return  process.env.VUE_APP_BASE_API + '/export/order'
 }
 //查询列表页end
 

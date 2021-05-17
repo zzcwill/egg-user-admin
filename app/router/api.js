@@ -26,6 +26,7 @@ module.exports = app => {
 	//excel导出
 	apiRouter.get('/excel', excelController.get);
 	apiRouter.get('/excel2', excelController.get2);
+	apiRouter.get('/export/order', excelController.exportOrder);
 
 	//发送邮件
 	apiRouter.post('/email', emailController.send);

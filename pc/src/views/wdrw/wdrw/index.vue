@@ -179,9 +179,10 @@ import {
 
   flowGet,
   flowNodes,
-  customerCreditInfoDownload,
+  exportOrder
 } from '@/api/wdrw/wdrw'
 import Pagination from '@/components/Pagination'
+import { getToken } from '@/utils/config'
 
 import {
   formateObjToParamStr
@@ -335,8 +336,8 @@ export default {
     exportData() {
       let data = formateObjToParamStr(this.searchForm)
       console.info(data)
-      // let exportUrl = customerCreditInfoDownload() + data
-      // window.location.href = exportUrl
+      let exportUrl = exportOrder() + '?token=' + getToken() + '&' + data
+      window.location.href = exportUrl
     }
   }
 }
