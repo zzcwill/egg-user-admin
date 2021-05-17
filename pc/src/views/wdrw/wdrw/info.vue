@@ -162,7 +162,6 @@
               </el-table>                                    
             </el-form>
         </el-tab-pane>
-        <!-- <el-tab-pane label="过程信息">过程信息</el-tab-pane> -->
       </el-tabs>
     </el-card>
   </div>

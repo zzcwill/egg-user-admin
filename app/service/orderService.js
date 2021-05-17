@@ -36,7 +36,7 @@ class MenuService extends Service {
 		)
 
     user.shoesArr = shoesArrInfo;
-    console.info(user)
+
     return user
   } 
   async list(search) {
@@ -85,6 +85,10 @@ class MenuService extends Service {
     let offset = (page - 1) * pageSize;
 		const { count, rows } = await Order.findAndCountAll({
 			where: whereData,
+      order: [
+        ['create_time', 'DESC']
+        // ['create_time', 'ASC']
+      ],      
 			offset: offset,
 			limit: pageSize,
       raw:true

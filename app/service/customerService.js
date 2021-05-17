@@ -3,6 +3,18 @@
 const Service = require('egg').Service;
 
 class CustomerService extends Service {
+  async allList() {
+    const { Customer } = this.ctx.model;
+
+		const rows = await Customer.findAll({
+			where: {},
+      raw:true
+		});
+
+    return {
+      list: rows
+    }
+  } 
   async list(search) {
     const { Customer } = this.ctx.model;
     const { page, pageSize } = search;
@@ -52,7 +64,7 @@ class CustomerService extends Service {
 			}
 		})
     return isOk		
-	}
+	}  
 }
 
 module.exports = CustomerService;

@@ -7,7 +7,7 @@ module.exports = app => {
 	const apiRouter = app.router.namespace('/api');
 	const { router, controller, config, middleware } = app;
 
-	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController } = controller.api;
+	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController, goodsController } = controller.api;
 
 	const page = middleware.page();
 
@@ -47,10 +47,14 @@ module.exports = app => {
 	apiRouter.post('/order/info', orderController.info);
 
 	//客户
+	apiRouter.post('/customer/all/list', customerController.allList);
 	apiRouter.post('/customer/list', customerController.list);
 	apiRouter.post('/customer/add', customerController.add);
 	apiRouter.post('/customer/update', customerController.update);
 	apiRouter.post('/customer/delete', customerController.delete);
+
+	//商品
+	apiRouter.post('/goods/all/list', goodsController.allList);
 
 };
 

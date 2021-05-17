@@ -8,6 +8,13 @@ export function orderList(data) {
     data   
   })
 }
+export function orderAdd(data) {
+  return request({
+    url: '/order/add',
+    method: 'post',
+    data   
+  })
+}
 export function orderUpdate(data) {
   return request({
     url: '/order/update',
@@ -31,17 +38,16 @@ export function orderInfo(data) {
 }
 
 
-export function flowGet() {
+export function customerAllList() {
   return request({
-    url: '/flow/get',
+    url: '/customer/all/list',
     method: 'post'
   })
 }
-export function flowNodes(data) {
+export function goodsAllList() {
   return request({
-    url: '/flow/nodes',
-		method: 'post',
-    data		
+    url: '/goods/all/list',
+		method: 'post',	
   })
 }
 export function customerCreditInfoDownload() {

@@ -3,6 +3,18 @@
 const Service = require('egg').Service;
 
 class GoodsService extends Service {
+  async allList() {
+    const { Goods } = this.ctx.model;
+
+		const rows = await Goods.findAll({
+			where: {},
+      raw:true
+		});
+
+    return {
+      list: rows
+    }
+  }  
   async getGoodsById(id) {
     const { Goods } = this.ctx.model;
     let goods = await Goods.findOne({
