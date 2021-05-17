@@ -40,11 +40,6 @@ module.exports = app => {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
-      goods_stock: {
-        type: Sequelize.INTEGER(11),
-        allowNull: false,
-        defaultValue: 0
-      },
       goods_sex: {
         type: Sequelize.TINYINT(1),
         allowNull: false,

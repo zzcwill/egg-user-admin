@@ -20,11 +20,11 @@ class GoodsService extends Service {
   }
   async update(search) {
     const { Goods } = this.ctx.model;
-		let { id, goods_stock } = search;
+		let { id } = search;
 
     let isOk = await Goods.update(
       {
-				goods_stock: goods_stock,
+				// goods_stock: goods_stock,
 			},
       {
         //条件

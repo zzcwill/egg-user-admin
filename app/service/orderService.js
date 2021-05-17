@@ -13,6 +13,30 @@ class MenuService extends Service {
       },
       raw:true
     })
+
+    let shoesArr = await OrderInfo.findAll({
+      where: {
+        order_id: id
+      },
+      raw:true
+    })
+
+		let shoesArrInfo = await Promise.all(
+			shoesArr.map(
+				async (item) =>{
+					let itemGoods = await this.service.goodsService.getGoodsById(item.goods_id)
+          console.info(itemGoods)
+					item.goods_brand = itemGoods.goods_brand
+          item.goods_code = itemGoods.goods_code
+          item.goods_sex = itemGoods.goods_sex
+          item.goods_color = itemGoods.goods_color
+					return item
+				}
+			)
+		)
+
+    user.shoesArr = shoesArrInfo;
+    console.info(user)
     return user
   } 
   async list(search) {

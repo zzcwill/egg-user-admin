@@ -122,7 +122,7 @@
               <span>{{ row.phone}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="地址" align="center">
+          <el-table-column label="地址" align="center" min-width="200">
             <template slot-scope="{row}">
               <span>{{ row.address }}</span>
             </template>

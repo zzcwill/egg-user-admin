@@ -104,8 +104,62 @@
                   </el-form-item>
                 </el-col>
               </el-row>  
-              
                             
+              <el-table
+                max-height="380"
+                v-loading="tableData.tableLoading"
+                :data="tableData.tableList"
+                border
+                fit
+                highlight-current-row
+                @selection-change="tableSelectionChange"
+              >
+                <el-table-column label="订单编号" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.order_id }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="品牌" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.goods_brand }}</span>
+                  </template>
+                </el-table-column>                
+                <el-table-column label="商品货号" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.goods_code }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品男女款" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.goods_sex | goods_sexFilter }}</span>
+                  </template>
+                </el-table-column> 
+                <el-table-column label="商品颜色" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.goods_color }}</span>
+                  </template>
+                </el-table-column>                                               
+                <el-table-column label="商品数量" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.num }}</span>
+                  </template>
+                </el-table-column>         
+                <el-table-column label="商品实际销售价格" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.actual_price }}</span>
+                  </template>
+                </el-table-column>  
+                <el-table-column label="商品实际总额" align="center">
+                  <template slot-scope="{row}">
+                    <span>{{ row.actual_fee }}</span>
+                  </template>
+                </el-table-column>  
+                <el-table-column label="商品销售时间" align="center" min-width="130">
+                  <template slot-scope="{row}">
+                    <span>{{ row.create_time }}</span>
+                  </template>
+                </el-table-column>                                                               
+              </el-table>                                    
             </el-form>
         </el-tab-pane>
         <!-- <el-tab-pane label="过程信息">过程信息</el-tab-pane> -->
@@ -118,7 +172,12 @@ import { orderInfo } from '@/api/wdrw/wdrw'
 
 export default {
   name: 'wdrwWdrwInfo',
-  filters: {},
+  filters: {
+    goods_sexFilter(value) {
+      let arr = ['女', '男']
+      return arr[value] || '-'
+    }
+  },
   data() {
     return {
       projectId: '',
@@ -134,16 +193,15 @@ export default {
         express_fee: '',
         order_fee: '',
         order_discount_fee: '',
-        shoesArr: [
-          // {
-          // 	goods_id : '',
-          // 	num: '',
-          // 	actual_price: ''
-          // }
-        ],
+        shoesArr: []
       },
       rules: {
         // customer_name: [{ required: true, message: '请输入客户信息', trigger: 'blur' }],
+      },
+      tableData: {
+        tableLoading: false,
+        tableList: [],
+        tableTotal: 0,
       },
       sale_typeOptions: [
         {
@@ -173,8 +231,17 @@ export default {
       }
       let apiData = await orderInfo(params)
 
-      this.searchForm = apiData.data
+      this.searchForm = apiData.data;
+
+      this.tableData = {
+        tableLoading: false,
+        tableList: this.searchForm.shoesArr,
+        tableTotal: this.searchForm.shoesArr.length,
+      }
     },
+    tableSelectionChange(val) {
+      console.info(val)
+    }
   },
 }
 </script>

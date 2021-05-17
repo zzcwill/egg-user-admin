@@ -32,6 +32,11 @@ module.exports = app => {
         type: Sequelize.DECIMAL(10,2),
         allowNull: false,
       },
+      create_time : {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+        allowNull: false,
+      },
       is_deleted: {
         type: Sequelize.TINYINT(1),
         allowNull: false,
