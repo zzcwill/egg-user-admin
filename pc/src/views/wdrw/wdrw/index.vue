@@ -229,6 +229,14 @@ export default {
       activeTabName: 'todo',
     }
   },
+  computed: {
+    visitedViews() {
+      return this.$store.state.tagsView.visitedViews
+    },
+    routes() {
+      return this.$store.state.permission.routes
+    }
+  },  
   created() {
     // this.getFtCodeOptions()
     // this.changeFtCode(this.searchForm.ftCode)
@@ -251,15 +259,44 @@ export default {
     tableSelectionChange(val) {
       console.info(val)
     },
-    toOperate(row) {
-      //传参query 最好不要用Boolean
-      this.$router.push({
-        path: '/wdrw/wdrw/page/flow',
-        query: {
-          orderId: row.id,
-          type: 'change'
+    // 如果有跳转路由，关闭
+    cancelSearchForm(toPath, fn) {
+      let tags = this.visitedViews
+      let selectedTag = {}
+      for (let tag of tags) {
+        if (tag.path === toPath) {
+          selectedTag = tag
         }
+      }
+      this.closeSelectedTag(selectedTag, fn)
+    },  
+    closeSelectedTag(view, fn) {
+      this.$store
+        .dispatch('tagsView/delView', view)
+        .then(({ visitedViews }) => {
+          fn()
+        })
+    },      
+    toOperate(row) {
+      let that = this;
+      this.cancelSearchForm('/wdrw/wdrw/page/flow', function () {
+        //传参query 最好不要用Boolean
+        that.$router.push({
+          path: '/wdrw/wdrw/page/flow',
+          query: {
+            orderId: row.id,
+            type: 'change'
+          }
+        })        
       })
+      //传参query 最好不要用Boolean
+      // this.$router.push({
+      //   path: '/wdrw/wdrw/page/flow',
+      //   query: {
+      //     orderId: row.id,
+      //     type: 'change'
+      //   }
+      // })
     },
     toDelete(row) {
         let that = this;
@@ -284,13 +321,23 @@ export default {
         })
     },
     toOperate3(row) {
-      this.$router.push({
-        path: '/wdrw/wdrw/page/info',
-        query: {
-          orderId: row.id,
-          type: 'info'
-        }
+      let that = this;
+      this.cancelSearchForm('/wdrw/wdrw/page/info', function () {
+        that.$router.push({
+          path: '/wdrw/wdrw/page/info',
+          query: {
+            orderId: row.id
+          }
+        })       
       })
+
+      // this.$router.push({
+      //   path: '/wdrw/wdrw/page/info',
+      //   query: {
+      //     orderId: row.id,
+      //     type: 'info'
+      //   }
+      // })
     },    
     async getTableList() {
       this.tableData.tableLoading = true
@@ -325,13 +372,24 @@ export default {
       this.getTableList()
     },
     newData() {
-      this.$router.push({
-        path: '/wdrw/wdrw/page/flow',
-        query: {
-          orderId: '',
-          type: 'new'
-        }
+      let that = this;
+      this.cancelSearchForm('/wdrw/wdrw/page/flow', function () {
+        that.$router.push({
+          path: '/wdrw/wdrw/page/flow',
+          query: {
+            orderId: '',
+            type: 'new'
+          }
+        })       
       })
+
+      // this.$router.push({
+      //   path: '/wdrw/wdrw/page/flow',
+      //   query: {
+      //     orderId: '',
+      //     type: 'new'
+      //   }
+      // })
     },
     exportData() {
       let data = formateObjToParamStr(this.searchForm)
