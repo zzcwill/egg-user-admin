@@ -53,6 +53,9 @@ export function goodsAllList() {
 export function exportOrder() {
   return  process.env.VUE_APP_BASE_API + '/export/order'
 }
+export function exportOrder2() {
+  return  process.env.VUE_APP_BASE_API + '/export/order2'
+}
 //查询列表页end
 
 //贷款详情页start

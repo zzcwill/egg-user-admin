@@ -78,12 +78,13 @@
         </el-row>
 
         <el-row :gutter="5">
-          <el-col :span="6" :offset="9">
+          <el-col :span="8" :offset="8">
             <el-form-item>
               <el-button type="primary" @click="searchTable('searchForm')">查询</el-button>
               <el-button @click="resetSearchForm('searchForm')">重置</el-button>
               <el-button type="primary" @click="newData()">新增订单</el-button>
               <el-button type="primary" @click="exportData()">导出</el-button>
+              <el-button type="primary" @click="exportData2()">导出2</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -177,9 +178,8 @@ import {
   orderList,
   orderDelete,
 
-  flowGet,
-  flowNodes,
-  exportOrder
+  exportOrder,
+  exportOrder2
 } from '@/api/wdrw/wdrw'
 import Pagination from '@/components/Pagination'
 import { getToken } from '@/utils/config'
@@ -396,7 +396,13 @@ export default {
       console.info(data)
       let exportUrl = exportOrder() + '?token=' + getToken() + '&' + data
       window.location.href = exportUrl
-    }
+    },
+    exportData2() {
+      let data = formateObjToParamStr(this.searchForm)
+      console.info(data)
+      let exportUrl = exportOrder2() + '?token=' + getToken() + '&' + data
+      window.location.href = exportUrl
+    }    
   }
 }
 </script>
