@@ -83,8 +83,8 @@
               <el-button type="primary" @click="searchTable('searchForm')">查询</el-button>
               <el-button @click="resetSearchForm('searchForm')">重置</el-button>
               <el-button type="primary" @click="newData()">新增订单</el-button>
-              <el-button type="primary" @click="exportData()">导出</el-button>
-              <el-button type="primary" @click="exportData2()">导出2</el-button>
+              <!-- <el-button type="primary" @click="exportData()">导出</el-button> -->
+              <el-button type="primary" @click="exportData2()">导出</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -155,7 +155,7 @@
           </el-table-column>                                                      
           <el-table-column label="操作" align="center" min-width="180">
             <template slot-scope="{row}">
-              <el-button @click="toOperate(row)" type="text">修改</el-button>
+              <!-- <el-button @click="toOperate(row)" type="text">修改</el-button> -->
               <el-button @click="toDelete(row)" type="text">删除</el-button>
               <el-button @click="toOperate3(row)" type="text">查看详情</el-button>
             </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ userInfo.realname }}</div>  
+    <div class="dashboard-text">当前登录用户: {{ userInfo.username }}</div>  
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
     margin: 30px;
   }
   &-text {
-    font-size: 30px;
+    font-size: 20px;
     line-height: 46px;
   }
 }
