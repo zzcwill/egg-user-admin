@@ -25,7 +25,7 @@ class MenuService extends Service {
 			shoesArr.map(
 				async (item) =>{
 					let itemGoods = await this.service.goodsService.getGoodsById(item.goods_id)
-          console.info(itemGoods)
+          // console.info(itemGoods)
 					item.goods_brand = itemGoods.goods_brand
           item.goods_code = itemGoods.goods_code
           item.goods_sex = itemGoods.goods_sex
@@ -124,6 +124,9 @@ class MenuService extends Service {
           raw:true,
           transaction: t
         })
+
+        console.info(order_code)
+        console.info(order.id)
 
         for(let key = 0 ; key < shoesArr.length ; key++ ) {
           let item = shoesArr[key]

@@ -135,7 +135,7 @@ class OrderController extends Controller {
 		let getData = ctx.request.body;
 		getData.order_code = getOrderCode()
 
-		console.info(getData)
+		// console.info(getData)
 
 		// ab test
 		// getData.shoesArr = '[{"goods_id":1,"goods_num":5,"goods_price":80},{"goods_id":2,"goods_num":5,"goods_price":80}]';

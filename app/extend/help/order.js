@@ -1,4 +1,5 @@
 
+let randomNumber = 0 
 
 // 获取订单单号
 let getOrderCode = () => {
@@ -15,6 +16,8 @@ let getOrderCode = () => {
 	let s = date.getSeconds();
 	s = s < 10 ? '0' + s : '' + s;
 	let str = y + '' + m + '' + d + '' + h + '' + mi + '' + s;
+	randomNumber++
+	str = str + 'shoe' + randomNumber
 	return str;
 }
 
