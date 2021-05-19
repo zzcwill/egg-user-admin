@@ -18,6 +18,9 @@ module.exports = app => {
 	apiRouter.post('/createUser', userController.createUser);
 	apiRouter.post('/changePassword', userController.changePassword);
 
+	// 微信小程序用户相关
+	apiRouter.post('/wechat/jscode2session', userController.jscode2session);
+
 
 	//文件上传
 	apiRouter.post('/upload', imgController.upload);

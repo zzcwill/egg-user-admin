@@ -39,7 +39,17 @@ class UserService extends Service {
       raw:true
     })
     return user
-  }  
+  }
+  async getUserByOpenid(openid) {
+    const { User } = this.ctx.model;
+    let user = await User.findOne({
+      where: {
+        openid
+      },
+      raw:true
+    })
+    return user
+  }
 }
 
 module.exports = UserService;
