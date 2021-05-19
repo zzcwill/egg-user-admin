@@ -1,63 +1,73 @@
-version: '3'
+version: '1'
 services: 
-  cnode:
+  shop:
     # build:
     #   context: .
     #   dockerfile: Dockerfile
     #   args:
     #     - env=value
-    image: cnode/egg-cnode:latest
-    # container_name: egg/egg-user-admin
+    image: egg-user-admin:latest
+    container_name: dc-egg-user-admin
     environment:
       - NODE_ENV=production
-      - EGG_SERVER_ENV=prod
-      - EGG_REDIS_DB=0
-      - EGG_REDIS_HOST=redis
-      - EGG_REDIS_PORT=6379
-      - EGG_REDIS_PASSWORD=egg_cnode
-      - EGG_MONGODB_URL=mongodb://egg_cnode:egg_cnode@mongodb:27017/egg_cnode
-      - EGG_MINI_ASSETS=true
-      - EGG_PASSPORT_GITHUB_CLIENT_ID=test
-      - EGG_PASSPORT_GITHUB_CLIENT_SECRET=test
-      # - EGG_SITE_STATIC_HOST=${EGG_SITE_STATIC_HOST}
-      - EGG_ALINODE_APPID=appid
-      - EGG_ALINODE_SECRET=secret
     depends_on:
       - redis
-      - mongodb
+      - mysql
+      # - mongodb
     networks:
       - docker_egg_user_admin
     ports:
       - 3000:3000
 
   redis:
-    image: redis:3.2-alpine
-    command: redis-server --appendonly yes --requirepass egg_cnode
-    volumes:
-      - egg-redis:/data
+    # image: redis:3.2-alpine
+    image: redis:latest
+    container_name: dc-redis
+    command: redis-server --appendonly yes --requirepass root
+    # volumes:
+    #   - shop-redis:/data
     networks:
       - docker_egg_user_admin
-    # ports:
-    #   - 6379:6379
+    ports:
+      - 6379:6379
 
-  mongodb:
-    image: mongo:3.2
+  mysql:
+    # image: mysql:5.7.16
+    image: mysql:latest
     restart: always
-    environment:      
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGO_INITDB_DATABASE=shop
+    container_name: dc-mysql
     volumes:
-      - egg-mongo:/data/db
-      - ./init.d/mongo:/docker-entrypoint-initdb.d
-    networks:
-      - docker_egg_user_admin
-    # ports:
-    #   - 27017:27017
+      # - ./mydir:/mydir
+      # - ./datadir:/var/lib/mysql
+      # - ./conf/my.cnf:/etc/my.cnf
+      # #      数据库还原目录 可将需要还原的sql文件放在这里
+      # - /docker/mysql/source:/docker-entrypoint-initdb.d
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      # - "MYSQL_DATABASE=shop"
+      # - "TZ=Asia/Shanghai"
+    ports:
+      - 3306:3306   
 
-volumes:
-  egg-mongo:
-  egg-redis:
+  # mongodb:
+  #   image: mongo:3.2
+  #   restart: always
+  #   environment:      
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=root
+  #     - MONGO_INITDB_DATABASE=shop
+  #   volumes:
+  #     - egg-mongo:/data/db
+  #     - ./init.d/mongo:/docker-entrypoint-initdb.d
+  #   networks:
+  #     - docker_egg_user_admin
+  #   ports:
+  #     - 27017:27017
+
+# volumes:
+#   egg-mongo:
+#   shop-mysql:  
+#   shop-redis:
 
 networks:
   docker_egg_user_admin:
