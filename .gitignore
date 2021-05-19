@@ -15,5 +15,6 @@ typings/
 
 # 配置文件
 /config/config.local.js
+/config/config.prod.js
 
 /db/data.sql

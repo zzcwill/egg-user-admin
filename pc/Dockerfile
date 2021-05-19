@@ -1,7 +1,7 @@
-FROM nginx
+FROM nginx:latest
 
-COPY ./dist /zzc-admin/
-COPY nginx.conf /etc/nginx/conf.d/zzc-admin.conf
+COPY ./dist /usr/app/egg-user-admin/pc
+COPY nginx.conf /etc/nginx/conf.d/egg-user-admin-pc.conf
 
-EXPOSE 8000
+EXPOSE 3301
 CMD ["nginx","-g","daemon off;"]

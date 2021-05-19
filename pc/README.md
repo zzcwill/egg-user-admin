@@ -124,3 +124,20 @@
 - yarn run lintfix
 - 对src/icons的svg图标压缩处理
 - yarn run svgo
+
+### docker部署相关
+#### 打包dist文件
+- yarn run build
+#### 打包本地镜像
+docker image build -t egg-user-admin-pc .
+#### docker login
+docker login
+#### 为本地镜像打标签，tag 不写默认为 latest
+docker image tag egg-user-admin-pc zhengzhichao/egg-user-admin-pc:0.1
+#### 发布镜像文件
+docker image push zhengzhichao/egg-user-admin-pc:0.1
+#### 服务器拉镜像文件
+docker login
+docker pull zhengzhichao/egg-user-admin-pc:0.1
+#### 跑版本镜像为容器
+docker run -p 3301:3301 --name egg-user-admin-pc -d zhengzhichao/egg-user-admin-pc:0.1
