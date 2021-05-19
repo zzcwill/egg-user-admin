@@ -1,5 +1,4 @@
-# FROM node:10.0-alpine
-FROM node:12.18.3
+FROM node:12.18.3-alpine
 
 # RUN apk --update add tzdata \
 #     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
