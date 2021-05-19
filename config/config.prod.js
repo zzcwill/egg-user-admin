@@ -13,7 +13,7 @@ module.exports = appInfo => {
   //   // 单数据库信息配置
   //   client: {
   //     // host
-  //     host: '127.0.0.1',
+  //     host: '47.110.42.110',
   //     // 端口号
   //     port: '3306',
   //     // 用户名
@@ -31,7 +31,7 @@ module.exports = appInfo => {
 
   config.sequelize = {
     dialect: 'mysql',
-    host: '127.0.0.1',
+    host: '47.110.42.110',
     port: 3306,
     user: 'root',
     password: 'root',    
@@ -55,7 +55,7 @@ module.exports = appInfo => {
 
   config.redis = {
     client: {
-      host: '127.0.0.1',
+      host: '47.110.42.110',
       port: '6379',
       password: 'root',
       db: '0',
@@ -74,7 +74,7 @@ module.exports = appInfo => {
 		port: 3300,
 		rabbitMqOption: {
 			protocol: 'amqp',
-			hostname: '127.0.0.1',
+			hostname: '47.110.42.110',
 			port:'5672',
 			username:'root',
 			password:'root',
