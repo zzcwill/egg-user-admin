@@ -72,7 +72,7 @@ class UserService extends Service {
     const arr = [token, timestamp, nonce];
     arr.sort();
 
-    const str = arrSort.join('');
+    const str = arr.join('');
     const shaStr = sha1(str);
 
     if (shaStr !== signature) {
@@ -139,16 +139,6 @@ class UserService extends Service {
                     Url: 'http://zzc.cdreamy.cn/bindok',
                   },
                 },
-              }, baseData);
-
-              toData.data = builder.buildObject(data);
-
-              resolve(toData);
-            } else if (result.Event === 'unsubscribe') {
-              // 取消关注
-              var data = Object.assign({
-                MsgType: 'text',
-                Content: '在下没能满足客官的需求，实在抱歉~~',
               }, baseData);
 
               toData.data = builder.buildObject(data);

@@ -12,8 +12,8 @@ const http = Axios.create({
 http.interceptors.request.use(config => {
 	let sessionId = sessionStorage.getItem('sessionId')
 	if(sessionId !== null) {
-		let authorization = 'Bearer ' + sessionStorage.getItem('sessionId')
-		config.headers['SessionID'] = authorization
+		let token = sessionStorage.getItem('token')
+		config.headers['token'] = token
 	}
 	return config
 }, error => {
@@ -34,15 +34,15 @@ http.interceptors.response.use((response) => {
 		return data
 	}
 	
-	if(data.message && data.message != null && data.message != undefined) {
+	if(data.msg) {
 		Vue.$za.tip.open({
-			text: data.message
+			text: data.msg
 		})
 	}
 	
 
 	// 若不是正确的返回code，且已经登录，就抛出错误
-	const err = new Error(data.message)
+	const err = new Error(data.msg)
 
 	err.data = data
 	err.response = response
@@ -54,7 +54,7 @@ http.interceptors.response.use((response) => {
 			case 400:
 				err.message = '请求错误'
 				Vue.$za.tip.open({
-					text: err.message
+					text: err.msg
 				})
 				break
 

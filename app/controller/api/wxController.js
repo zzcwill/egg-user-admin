@@ -151,7 +151,7 @@ class UserController extends Controller {
 		let getData = ctx.request.body;
 
 		let toUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token';
-		let paramData = '?appid=' + appid + '&secret=' + appSecret +'&js_code=' + getData.code + '&grant_type=' + 'authorization_code'
+		let paramData = '?appid=' + appid + '&secret=' + appSecret +'&code=' + getData.code + '&grant_type=' + 'authorization_code'
 		let wechatdata = await axios({
 			method: 'get',
 			url: toUrl + paramData,
@@ -212,7 +212,9 @@ class UserController extends Controller {
 		const { AuthFailed, ParameterException } = ctx.helper.httpCode;		
 		const { setPassWord, getSalt } = ctx.helper.password;
 
+		console.info(ctx.request.query)
 		let toData = await wxService.authWechatMsg(ctx.request.query)
+		console.info(toData)
 
 		ctx.body = toData   
   }
@@ -226,12 +228,11 @@ class UserController extends Controller {
 		const { AuthFailed, ParameterException } = ctx.helper.httpCode;		
 		const { setPassWord, getSalt } = ctx.helper.password;
 
-		if(ctx.request.header['content-type'] !== 'application/xml') {
-			let error = new ParameterException('请求只支持xml数据')
-			throw error;
-		}
+		console.info(ctx.request.body)
 
 		let toData = await wxService.wechatMsg(ctx.request.body)
+
+		console.info(toData)
 
 		if(toData.error) {
 			let error = new ParameterException('微信消息推送xml解析错误')
