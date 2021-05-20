@@ -1,10 +1,6 @@
 'use strict';
 
 const { Controller } = require('egg');
-const axios = require('axios');
-
-const appid = 'wxe9bd6704da7435ff';
-const appSecret = 'b21f5a2b7497bacd729537fbc135ab84';
 
 class UserController extends Controller {
 	async login() {
@@ -248,80 +244,6 @@ class UserController extends Controller {
 			isOK: isOK
 		})
 	}
-
-	// 微信openid绑定
-	async jscode2session() {
-		const { ctx, service, config } = this;
-		const { resOk } = ctx.helper.resData;
-		const { setToken } = ctx.helper.token;
-		const { userService, cache } = service;
-		const { checkParam, lodash } = ctx.helper;
-		const { AuthFailed, ParameterException } = ctx.helper.httpCode;		
-		const { setPassWord, getSalt } = ctx.helper.password;
-
-		let ruleData = {
-			code: [
-				{
-					ruleName: 'required',
-					rule: (val) => {
-						var isOk = true
-						if (!val) {
-							isOk = false
-						}
-						return isOk
-					}
-				}
-			]
-		}
-		let msgParam = checkParam.check(ctx, ruleData)
-		if (msgParam) {
-			let error = new ParameterException(msgParam)
-			throw error;
-			return
-		}
-
-		let getData = ctx.request.body;
-
-		let toUrl = 'https://api.weixin.qq.com/sns/jscode2session';
-		let paramData = '?appid=' + appid + '&secret=' + appSecret +'&js_code=' + getData.code + '&grant_type=' + 'authorization_code'
-		let wechatdata = await axios({
-			method: 'get',
-			url: toUrl + paramData,
-			headers: {
-				'Content-Type': 'application/json',
-			},			
-		});		
-
-		let openid = wechatdata.data.openid;
-		// 这个去获取用户信息
-		let session_key = wechatdata.data.session_key;
-
-		let user = await userService.getUserByOpenid(openid) 
-
-		// 用session_key-去获取微信用户信息
-
-		let apidata = {}
-		if(!user) {
-			apidata.isOk = 0;
-			apidata.openid = openid;
-			ctx.body = resOk(apidata);
-			return
-		}
-
-		if(user) {
-			let tokenCahe = lodash.pick(user, ['uid', 'username', 'level', 'is_on_duty', 'register_time']);
-			let token = setToken(tokenCahe);
-			await cache.set(token, user, config.tokenSecurity.expiresIn);
-
-			apidata.token = token;
-			// apidata.openid = openid;
-			// apidata.session_key = session_key;
-			apidata.isOk = 1;
-			apidata.user = tokenCahe;
-
-			ctx.body = resOk(apidata);
-		}
-	}	
 }
 
 module.exports = UserController;

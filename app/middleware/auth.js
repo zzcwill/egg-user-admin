@@ -5,7 +5,8 @@ module.exports = () => {
 
     const config = ctx.app.config;
 
-    if(config.auth.noauthArr.indexOf(ctx.url) !== -1) {
+    let urlArr = ctx.url.split('?')
+    if(config.auth.noauthArr.indexOf(urlArr[0]) !== -1) {
       await next();
       return
     }

@@ -21,6 +21,25 @@ module.exports = appInfo => {
     }
   };
 
+  // 配置支持xml获取数据
+  config.bodyParser = {
+    enable: true,
+    encoding: 'utf8',
+    formLimit: '100kb',
+    jsonLimit: '100kb',
+    strict: true,
+    // @see https://github.com/hapijs/qs/blob/master/lib/parse.js#L8 for more options
+    queryString: {
+      arrayLimit: 100,
+      depth: 5,
+      parameterLimit: 1000,
+    },
+    enableTypes: ['json', 'form', 'text'],
+    extendTypes: {
+      text: ['text/xml', 'application/xml'],
+    }
+  };  
+
   config.multipart = {
     mode: 'stream'
   };
@@ -37,7 +56,18 @@ module.exports = appInfo => {
     'notfoundHandler',
   ];
   config.auth = {
-    noauthArr: ['/api/login', '/api/createUser', '/api/wechat/jscode2session', '/api/wechat/getUserInfo'],
+    noauthArr: [
+      '/api/login', 
+      '/api/createUser', 
+
+      '/api/wechat/jscode2session',
+      '/api/wechat/xcxLogin',
+
+      '/api/wechat/oauth2AccessToken',
+      '/api/wechat/wxLogin',
+
+      '/api/wechat/msg'
+    ],
     ignore: ctx => {
       if (ctx.request.url.indexOf('/api') === -1) {
         return true;

@@ -7,7 +7,7 @@ module.exports = app => {
 	const apiRouter = app.router.namespace('/api');
 	const { router, controller, config, middleware } = app;
 
-	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController, goodsController } = controller.api;
+	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController, goodsController, xcxController, wxController} = controller.api;
 
 	const page = middleware.page();
 
@@ -17,10 +17,6 @@ module.exports = app => {
 	apiRouter.post('/userInfo', userController.userInfo);
 	apiRouter.post('/createUser', userController.createUser);
 	apiRouter.post('/changePassword', userController.changePassword);
-
-	// 微信小程序用户相关
-	apiRouter.post('/wechat/jscode2session', userController.jscode2session);
-
 
 	//文件上传
 	apiRouter.post('/upload', imgController.upload);
@@ -61,5 +57,16 @@ module.exports = app => {
 	//商品
 	apiRouter.post('/goods/all/list', goodsController.allList);
 
+	// 微信小程序相关
+	apiRouter.post('/wechat/jscode2session', xcxController.jscode2session);
+	apiRouter.post('/wechat/xcxLogin', xcxController.xcxLogin);
+
+	// 微信h5相关
+	apiRouter.post('/wechat/oauth2AccessToken', wxController.oauth2AccessToken);
+	apiRouter.post('/wechat/wxLogin', wxController.wxLogin);
+
+	// 微信公众号-消息推送
+	apiRouter.get('/wechat/msg', wxController.authWechatMsg);
+	apiRouter.post('/wechat/msg', wxController.wechatMsg);
 };
 
