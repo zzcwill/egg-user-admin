@@ -40,7 +40,7 @@ class UserService extends Service {
     })
     return user
   }
-  async updateOpenid(id, openid) {
+  async updateOpenid(uid, openid) {
     const { User } = this.ctx.model;
 
     let isOk = await User.update(
@@ -50,7 +50,7 @@ class UserService extends Service {
       {
         //条件
         where: {
-					id: id
+					uid
 				},
         raw:true
       }

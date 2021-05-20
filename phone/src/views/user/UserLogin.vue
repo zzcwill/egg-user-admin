@@ -66,7 +66,7 @@ export default {
     return {
 			code: this.$route.query.code,
       user: {
-        username: '',
+        username: 'zzc',
         password: '',
         openidCacheKey: ''
       },

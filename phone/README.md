@@ -69,11 +69,11 @@ docker image build -t egg-user-admin-phone .
 #### docker login
 docker login
 #### 为本地镜像打标签，tag 不写默认为 latest
-docker image tag egg-user-admin-phone zhengzhichao/egg-user-admin-phone:0.1
+docker image tag egg-user-admin-phone zhengzhichao/egg-user-admin-phone:1.0
 #### 发布镜像文件
-docker image push zhengzhichao/egg-user-admin-phone:0.1
+docker image push zhengzhichao/egg-user-admin-phone:1.0
 #### 服务器拉镜像文件
 docker login
-docker pull zhengzhichao/egg-user-admin-phone:0.1
+docker pull zhengzhichao/egg-user-admin-phone:1.0
 #### 跑版本镜像为容器
-docker run -p 3302:3302 --name egg-user-admin-phone -d zhengzhichao/egg-user-admin-phone:0.1
+docker run -p 80:3302 --name egg-user-admin-phone -d zhengzhichao/egg-user-admin-phone:1.0

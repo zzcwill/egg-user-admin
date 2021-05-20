@@ -6,7 +6,6 @@ const xml2js = require('xml2js');
 const parser = new xml2js.Parser({ trim: true, explicitArray: false, explicitRoot: false });
 const builder = new xml2js.Builder({ headless: true, cdata: true, explicitRoot: false, rootName: 'xml' });
 
-
 class UserService extends Service {
   async getUserByUsername(username) {
     const { User } = this.ctx.model;

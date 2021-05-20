@@ -11,6 +11,11 @@ const axios = require('axios');
 const appid = 'wxe232456cb62be35a';
 const appSecret = 'c38c2a1187ca07e4b6077a3c9aa2abde';
 
+function getTimeMs() {
+	var t = new Date()
+	return t.getTime()
+}
+
 class UserController extends Controller {
 	// openid 容易被前端修改
 	// 1 实际业务不能直接openid绑定,通过access_token传给后端拿到openid,access_token失效就让前端跳转页面
@@ -87,7 +92,7 @@ class UserController extends Controller {
 			return
 		}
 
-    let openid = await cache.get(openidCacheKey);
+    let openid = await cache.get(getData.openidCacheKey);
   
     if(!openid) {
       throw new Forbidden('无效的openid');
@@ -96,7 +101,7 @@ class UserController extends Controller {
     } 
 
 		// openid
-		let updateOk = await userService.updateOpenid(user.id, openid);
+		let updateOk = await userService.updateOpenid(user.uid, openid);
 
 		if(updateOk !== 1) {
 			let error = new ParameterException('绑定openid失败')
@@ -177,6 +182,9 @@ class UserController extends Controller {
 		// https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
 		let access_token = wechatdata.data.access_token;
 
+		// test
+		// let openid = '1'
+
 		let user = await userService.getUserByOpenid(openid) 
 
 		// 用session_key-去获取微信用户信息
@@ -185,7 +193,7 @@ class UserController extends Controller {
 		if(!user) {
 			apidata.isOk = 0;
 
-			let openidCacheKey =  user.username + '-' + user.uid
+			let openidCacheKey =  getTimeMs()
 			await cache.set(openidCacheKey, openid, config.tokenSecurity.expiresIn);
 			apidata.openidCacheKey = openidCacheKey;
 			ctx.body = resOk(apidata);
