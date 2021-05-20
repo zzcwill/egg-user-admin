@@ -150,6 +150,8 @@ class UserController extends Controller {
 
 		let getData = ctx.request.body;
 
+		console.info(getData)
+
 		let toUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token';
 		let paramData = '?appid=' + appid + '&secret=' + appSecret +'&code=' + getData.code + '&grant_type=' + 'authorization_code'
 		let wechatdata = await axios({
@@ -158,10 +160,13 @@ class UserController extends Controller {
 			headers: {
 				'Content-Type': 'application/json',
 			},			
-		});		
+		});	
 
-		if (wechatdata.data.errcode !== 0) {
-			let error = new ParameterException(wechatdata.data.errmsg)
+		console.info(wechatdata)
+		console.info(wechatdata.data)
+
+		if (wechatdata.errcode) {
+			let error = new ParameterException(wechatdata.errmsg)
 			throw error;
 			return
 		}

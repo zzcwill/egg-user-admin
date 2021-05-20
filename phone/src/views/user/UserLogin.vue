@@ -116,6 +116,7 @@ export default {
       let data = {
         code: this.code,
       }
+      console.info(data)
       let res = await wechatOauth2AccessToken(data)
 
       if (!res.data.token){

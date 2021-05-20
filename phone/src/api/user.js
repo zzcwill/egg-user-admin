@@ -21,7 +21,7 @@ export function wechatOauth2AccessToken (data) {
   return http({
     url: 'wechat/oauth2AccessToken',
     method: 'post',
-    params: data,
+    data,
   })
 }
 
@@ -29,6 +29,6 @@ export function wechatWxLogin (data) {
   return http({
     url: 'wechat/wxLogin',
     method: 'post',
-    params: data,
+    data,
   })
 }
