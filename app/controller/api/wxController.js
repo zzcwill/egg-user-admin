@@ -294,6 +294,32 @@ class UserController extends Controller {
 			// access_token: access_token
 		})
 	}
+
+	async wechatQrCode() {
+		const { ctx, service, config } = this;
+		const { resOk } = ctx.helper.resData;
+		const { setToken } = ctx.helper.token;
+		const { wxService, cache } = service;
+		const { checkParam, lodash } = ctx.helper;
+		const { AuthFailed, ParameterException } = ctx.helper.httpCode;		
+		const { setPassWord, getSalt } = ctx.helper.password;
+		
+		let access_token = await cache.get('access_token')
+
+		if(!access_token) {
+			await wxService.getAccessToken()
+			access_token = await cache.get('access_token')
+			if(!access_token) {
+				let error = new ParameterException('access_token获取失败')
+				throw error;			
+				return
+			}
+		}
+
+		let toData = await wxService.getWechatQrCode(access_token, ctx.request.user)
+
+		ctx.body = resOk(toData)
+	}
 	
 }
 

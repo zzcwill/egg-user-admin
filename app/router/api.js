@@ -71,6 +71,8 @@ module.exports = app => {
 	apiRouter.post('/wechat/msg', wxController.wechatMsg);
 	// 微信公众号-发送消息给微信
 	apiRouter.post('/wechat/send', wxController.wechatSend);
+	// 获取带场景值二维码
+	apiRouter.post('/wechat/qrcode', wxController.wechatQrCode);	
 
 };
 

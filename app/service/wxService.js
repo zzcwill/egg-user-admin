@@ -80,21 +80,48 @@ class wxService extends Service {
             break;
           case 'event':
             if (result.Event === 'subscribe') {
-              // 关注
-              var data = Object.assign({
-                MsgType: 'news',
-                ArticleCount: 1,
-                Articles: {
-                  item: {
-                    Title: 'test',
-                    Description: 'test',
-                    PicUrl: 'http://47.110.42.110:3301/static/img/1.29a2929d.jpg',
-                    Url: 'http://zzc.cdreamy.cn/bindok',
-                  },
-                },
-              }, baseData);
+              console.info(result)
 
-              toData.data = builder.buildObject(data);
+              // 二维码场景值进入
+              if (result.EventKey) {
+                // 自己定义scene_str-场景值  qrscene_ + scene_str
+                let sceneIdArr = result.EventKey.split('_')
+                let scene_str = sceneIdArr[1];
+
+                console.info( 'scene_str:' + scene_str)
+
+                let data = Object.assign({
+                  MsgType: 'news',
+                  ArticleCount: 1,
+                  Articles: {
+                    item: {
+                      Title: 'testcode',
+                      Description: 'testcode',
+                      PicUrl: 'http://47.110.42.110:3301/static/img/1.29a2929d.jpg',
+                      Url: 'http://zzc.cdreamy.cn/bindok' + '?scene_str=' + scene_str,
+                    },
+                  },
+                }, baseData);
+                toData.data = builder.buildObject(data);
+              }
+
+              // 普通关注
+              if(!result.EventKey) {
+                var data = Object.assign({
+                  MsgType: 'news',
+                  ArticleCount: 1,
+                  Articles: {
+                    item: {
+                      Title: 'test',
+                      Description: 'test',
+                      PicUrl: 'http://47.110.42.110:3301/static/img/1.29a2929d.jpg',
+                      Url: 'https://www.baidu.com/',
+                    },
+                  },
+                }, baseData);
+  
+                toData.data = builder.buildObject(data);
+              }
 
               resolve(toData);
             }
@@ -116,17 +143,17 @@ class wxService extends Service {
 
   //获取微信公众号-接口凭证
   async getAccessToken() {
-		const { cache } = this.service;
+    const { cache } = this.service;
 
-		let toUrl = 'https://api.weixin.qq.com/cgi-bin/token';
-		let paramData = '?appid=' + appid + '&secret=' + appSecret + '&grant_type=' + 'client_credential'
-		let wechatdata = await axios({
-			method: 'get',
-			url: toUrl + paramData,
-			headers: {
-				'Content-Type': 'application/json',
-			},			
-		});
+    let toUrl = 'https://api.weixin.qq.com/cgi-bin/token';
+    let paramData = '?appid=' + appid + '&secret=' + appSecret + '&grant_type=' + 'client_credential'
+    let wechatdata = await axios({
+      method: 'get',
+      url: toUrl + paramData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     await cache.set('access_token', wechatdata.data.access_token, wechatdata.data.expires_in);
   }
@@ -137,15 +164,14 @@ class wxService extends Service {
 
     let isOK = 0
 
-		let toUrl = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + access_token;
-		let paramData = '?appid=' + appid + '&secret=' + appSecret + '&grant_type=' + 'client_credential'
-		let wechatdata = await axios({
-			method: 'post',
-			url: toUrl,
-			headers: {
-				'Content-Type': 'application/json',
-			},	
-      data:{
+    let toUrl = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + access_token;
+    let wechatdata = await axios({
+      method: 'post',
+      url: toUrl,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
         touser: openid,
         template_id: 'SlFBkMkNJqIqFbaBsM2tgb-qZr-Fx-0WUXhtZraxlhU',
         url: 'http://zzc.cdreamy.cn/bindok',
@@ -159,14 +185,53 @@ class wxService extends Service {
             color: '#173177'
           }
         }
-      }		
-		});
+      }
+    });
     // console.info(wechatdata)
-    if(wechatdata.data.errcode === 0) {
+    if (wechatdata.data.errcode === 0) {
       isOK = 1
     }
     return isOK
-  }  
+  }
+
+  // 获取带场景二维码
+  async getWechatQrCode(access_token, user) {
+    let { dayjs } = this.ctx.helper
+
+    let toData = {
+      isOK: 0,
+      ticket: '',
+      url: '',
+      qrcodeImgUrl: ''
+    }
+
+    let toUrl = 'https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=' + access_token;
+    let wechatdata = await axios({
+      method: 'post',
+      url: toUrl,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        action_name: 'QR_LIMIT_STR_SCENE',
+        action_info: {
+          scene: { scene_str: user.username + '-' + user.uid }
+        }
+      }
+    });
+    console.info( 'scene_str:' + user.username + '-' + user.uid)
+    console.info(wechatdata.data)
+    if(!wechatdata.data.ticket) {
+      return toData
+    }
+    toData = {
+      isOK: 1,
+      ticket: wechatdata.data.ticket,
+      url: wechatdata.data.url,
+      qrcodeImgUrl: 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' + wechatdata.data.ticket
+    }
+    return toData
+  }
 }
 
 module.exports = wxService;
