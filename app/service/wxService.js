@@ -96,7 +96,7 @@ class wxService extends Service {
                   Articles: {
                     item: {
                       Title: 'testcode',
-                      Description: 'testcode',
+                      Description: '未关注点击关注的用户推送',
                       PicUrl: 'http://47.110.42.110:3301/static/img/1.29a2929d.jpg',
                       Url: 'http://zzc.cdreamy.cn/bindok' + '?scene_str=' + scene_str,
                     },
@@ -120,6 +120,35 @@ class wxService extends Service {
                   },
                 }, baseData);
   
+                toData.data = builder.buildObject(data);
+              }
+
+              resolve(toData);
+            }
+            // 已关注
+            if (result.Event === 'SCAN') {
+              console.info(result)
+
+              // 二维码场景值进入
+              if (result.EventKey) {
+                // 自己定义scene_str-场景值  qrscene_ + scene_str
+                let sceneIdArr = result.EventKey.split('_')
+                let scene_str = sceneIdArr[1];
+
+                console.info( 'scene_str:' + scene_str)
+
+                let data = Object.assign({
+                  MsgType: 'news',
+                  ArticleCount: 1,
+                  Articles: {
+                    item: {
+                      Title: 'testcode',
+                      Description: '已关注的用户推送',
+                      PicUrl: 'http://47.110.42.110:3301/static/img/1.29a2929d.jpg',
+                      Url: 'http://zzc.cdreamy.cn/bindok' + '?scene_str=' + scene_str,
+                    },
+                  },
+                }, baseData);
                 toData.data = builder.buildObject(data);
               }
 
