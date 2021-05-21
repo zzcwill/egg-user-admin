@@ -241,11 +241,11 @@ class UserController extends Controller {
 		const { AuthFailed, ParameterException } = ctx.helper.httpCode;		
 		const { setPassWord, getSalt } = ctx.helper.password;
 
-		console.info(ctx.request.body)
+		// console.info(ctx.request.body)
 
 		let toData = await wxService.wechatMsg(ctx.request.body)
 
-		console.info(toData)
+		// console.info(toData)
 
 		if(toData.error) {
 			let error = new ParameterException('微信消息推送xml解析错误')
@@ -256,6 +256,44 @@ class UserController extends Controller {
 		ctx.body = toData.data 
   }	
 	
+	async wechatSend() {
+		const { ctx, service, config } = this;
+		const { resOk } = ctx.helper.resData;
+		const { setToken } = ctx.helper.token;
+		const { wxService, cache } = service;
+		const { checkParam, lodash } = ctx.helper;
+		const { AuthFailed, ParameterException } = ctx.helper.httpCode;		
+		const { setPassWord, getSalt } = ctx.helper.password;
+		
+		let access_token = await cache.get('access_token')
+
+		if(!access_token) {
+			await wxService.getAccessToken()
+			access_token = await cache.get('access_token')
+			if(!access_token) {
+				let error = new ParameterException('access_token获取失败')
+				throw error;			
+				return
+			}
+		}
+
+		let openid = ctx.request.user.openid
+
+		// console.info(ctx.request.user)
+		if(!openid) {
+			let error = new ParameterException('登录用户未绑定微信公众号')
+			throw error;		
+			return
+		}
+
+		// ctx.request.user.openid
+		let isOK = await wxService.sendMsgToWx(openid, access_token, ctx.request.user)
+
+		ctx.body = resOk({
+			isOK: isOK
+			// access_token: access_token
+		})
+	}
 	
 }
 

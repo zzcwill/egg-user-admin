@@ -67,6 +67,10 @@ module.exports = app => {
 
 	// 微信公众号-消息推送
 	apiRouter.get('/wechat/msg', wxController.authWechatMsg);
+	// 微信公众号-接受微信消息
 	apiRouter.post('/wechat/msg', wxController.wechatMsg);
+	// 微信公众号-发送消息给微信
+	apiRouter.post('/wechat/send', wxController.wechatSend);
+
 };
 

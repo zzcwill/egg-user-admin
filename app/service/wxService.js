@@ -6,62 +6,17 @@ const xml2js = require('xml2js');
 const parser = new xml2js.Parser({ trim: true, explicitArray: false, explicitRoot: false });
 const builder = new xml2js.Builder({ headless: true, cdata: true, explicitRoot: false, rootName: 'xml' });
 
-class UserService extends Service {
-  async getUserByUsername(username) {
-    const { User } = this.ctx.model;
+const axios = require('axios');
 
-    let user = await User.findOne({
-      where: {
-        username
-      },
-      raw: true
-    })
-    return user
-  }
-  async createUser(user) {
-    const { User } = this.ctx.model;
-    let newUser = await User.create(user)
-    return newUser
-  }
-  async changePassword(password, uid) {
-    const { User } = this.ctx.model;
-    let isOk = await User.update(
-      password,
-      {
-        //条件
-        where: uid
-      }
-    )
-    return isOk[0]
-  }
-  async getUserByOpenid(openid) {
-    const { User } = this.ctx.model;
-    let user = await User.findOne({
-      where: {
-        openid
-      },
-      raw: true
-    })
-    return user
-  }
-  async updateOpenid(id, openid) {
-    const { User } = this.ctx.model;
+// 订阅号
+// const appid = 'wxe2a7c21fe894a92d';
+// const appSecret = '0b3a16c1661914fa41397a64875ec534';
 
-    let isOk = await User.update(
-      {
-        openid: openid,
-      },
-      {
-        //条件
-        where: {
-          id: id
-        },
-        raw: true
-      }
-    )
-    return isOk[0]
-  }
+// test服务号
+const appid = 'wxe232456cb62be35a';
+const appSecret = 'c38c2a1187ca07e4b6077a3c9aa2abde';
 
+class wxService extends Service {
   async authWechatMsg(query) {
     let { signature, echostr, timestamp, nonce } = query;
 
@@ -90,7 +45,6 @@ class UserService extends Service {
     }
     return new Promise((resolve, reject) => {
       parser.parseString(msgbufer.toString(), async function (err, result) {
-        console.info(result)
         if (err) {
           toData.error = err
           resolve(toData);
@@ -144,6 +98,11 @@ class UserService extends Service {
 
               resolve(toData);
             }
+            if (result.Event === 'TEMPLATESENDJOBFINISH') {
+              // 主动叫微信发送消息-微信在通知我用户是否收到消息
+              console.info(result)
+              resolve(toData);
+            }
             resolve(toData);
             break;
           default:
@@ -154,6 +113,60 @@ class UserService extends Service {
     });
 
   }
+
+  //获取微信公众号-接口凭证
+  async getAccessToken() {
+		const { cache } = this.service;
+
+		let toUrl = 'https://api.weixin.qq.com/cgi-bin/token';
+		let paramData = '?appid=' + appid + '&secret=' + appSecret + '&grant_type=' + 'client_credential'
+		let wechatdata = await axios({
+			method: 'get',
+			url: toUrl + paramData,
+			headers: {
+				'Content-Type': 'application/json',
+			},			
+		});
+
+    await cache.set('access_token', wechatdata.data.access_token, wechatdata.data.expires_in);
+  }
+
+  // 通知微信-推送某一用户消息
+  async sendMsgToWx(openid, access_token, user) {
+    let { dayjs } = this.ctx.helper
+
+    let isOK = 0
+
+		let toUrl = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + access_token;
+		let paramData = '?appid=' + appid + '&secret=' + appSecret + '&grant_type=' + 'client_credential'
+		let wechatdata = await axios({
+			method: 'post',
+			url: toUrl,
+			headers: {
+				'Content-Type': 'application/json',
+			},	
+      data:{
+        touser: openid,
+        template_id: 'SlFBkMkNJqIqFbaBsM2tgb-qZr-Fx-0WUXhtZraxlhU',
+        url: 'http://zzc.cdreamy.cn/bindok',
+        data: {
+          User: {
+            value: user.username,
+            color: '#173177'
+          },
+          Date: {
+            value: dayjs().format('YYYY-MM-DD'),
+            color: '#173177'
+          }
+        }
+      }		
+		});
+    // console.info(wechatdata)
+    if(wechatdata.data.errcode === 0) {
+      isOK = 1
+    }
+    return isOK
+  }  
 }
 
-module.exports = UserService;
+module.exports = wxService;
