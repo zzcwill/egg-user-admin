@@ -66,7 +66,9 @@ module.exports = appInfo => {
       '/api/wechat/oauth2AccessToken',
       '/api/wechat/wxLogin',
 
-      '/api/wechat/msg'
+      '/api/wechat/msg',
+
+      '/api/health'
     ],
     ignore: ctx => {
       if (ctx.request.url.indexOf('/api') === -1) {

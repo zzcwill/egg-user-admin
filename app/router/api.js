@@ -7,7 +7,7 @@ module.exports = app => {
 	const apiRouter = app.router.namespace('/api');
 	const { router, controller, config, middleware } = app;
 
-	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController, goodsController, xcxController, wxController} = controller.api;
+	const { userController, imgController, excelController, emailController, menuController, roleController, orderController, customerController, goodsController, xcxController, wxController, consulController} = controller.api;
 
 	const page = middleware.page();
 
@@ -74,5 +74,6 @@ module.exports = app => {
 	// 获取带场景值二维码
 	apiRouter.post('/wechat/qrcode', wxController.wechatQrCode);	
 
+	apiRouter.get('/health', consulController.health);	
 };
 
