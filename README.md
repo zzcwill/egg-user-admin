@@ -40,8 +40,10 @@ docker run -p 3000:3000 --name egg-user-admin -d zhengzhichao/egg-user-admin:1.0
 
 ### 如何pm2部署
 服务器，git拉仓库
-放config.prod.js文件
+git pull
 npm install
+放config.prod.js文件
+3000-3001
 pm2 start ecosystem.config.js --env production
 查看控制台
 pm2 log 0
