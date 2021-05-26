@@ -2,7 +2,7 @@
 
 const Service = require('egg').Service;
 
-class MenuService extends Service {
+class OrderService extends Service {
   async getOrderById(id) {
     const { Order, OrderInfo, Goods } = this.ctx.model;
     const { lodash } = this.ctx.helper;
@@ -227,5 +227,5 @@ class MenuService extends Service {
 	} 
 }
 
-module.exports = MenuService;
+module.exports = OrderService;
 
